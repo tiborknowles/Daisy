@@ -6,7 +6,6 @@
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
     <!ENTITY arl "http://www.autonomousrecordlabel.com/ontology#" >
 ]>
-
 <rdf:RDF xmlns="&arl;"
      xml:base="&arl;"
      xmlns:arl="&arl;"
@@ -15,857 +14,203 @@
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
     <owl:Ontology rdf:about="&arl;">
         <rdfs:label>Autonomous Record Label Ontology</rdfs:label>
-        <rdfs:comment>An ontology describing the domain of an AI-powered record label, optimized for agentic AI, RL, and revenue generation. Incorporates insights from Donald Passman's 'All You Need to Know About the Music Business.' Version includes refined properties, class hierarchies, axioms for contracts, marketing, agent actions, inverse object properties, controlled vocabularies, and monetary amount modeling.</rdfs:comment>
-        <owl:versionInfo>2.2.2</owl:versionInfo> <!-- Incremented version for changes -->
+        <rdfs:comment>An ontology describing the domain of an AI-powered record label. Pass 9: Refining Financial Models, Deepening Metric Integration, and Advanced Contractual Scenario Support. Incorporates insights from Donald Passman's 'All You Need to Know About the Music Business.'</rdfs:comment>
+        <owl:versionInfo>1.8.0-pass9</owl:versionInfo>
+        <!-- Assuming previous passes are imported or merged -->
     </owl:Ontology>
-
-    <!-- Annotation Properties -->
-    <owl:AnnotationProperty rdf:about="&arl;sourceSystem"/>
-    <owl:AnnotationProperty rdf:about="&arl;confidenceScore"/>
-    <owl:AnnotationProperty rdf:about="&arl;lastUpdated"/>
-    <owl:AnnotationProperty rdf:about="&arl;potentialRLRewardMetric"/>
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
-    // Object Properties (Full Set with Domains, Ranges, Labels, Comments, Inverses)
+    // New and Refined Object Properties for Pass 9
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    <owl:ObjectProperty rdf:about="&arl;hasTeamMember"> <rdfs:label xml:lang="en">has team member</rdfs:label> <rdfs:comment xml:lang="en">Relates an Artist or MusicGroup to a professional who is part of their career team (e.g., Manager, Attorney). Passman Ch. 2.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Artist"/> <rdf:Description rdf:about="&arl;MusicGroup"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;TeamMember"/> <owl:inverseOf rdf:resource="&arl;isTeamMemberFor"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isTeamMemberFor"> <rdfs:label xml:lang="en">is team member for</rdfs:label> <rdfs:comment xml:lang="en">Relates a TeamMember to the Artist or MusicGroup they provide services for. Inverse of hasTeamMember.</rdfs:comment> <rdfs:domain rdf:resource="&arl;TeamMember"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Artist"/> <rdf:Description rdf:about="&arl;MusicGroup"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;hasTeamMember"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;managesCareerOf"> <rdfs:label xml:lang="en">manages career of</rdfs:label> <rdfs:comment xml:lang="en">Relates a PersonalManager to the Artist or MusicGroup whose career they manage. Passman Ch. 3.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PersonalManager"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Artist"/> <rdf:Description rdf:about="&arl;MusicGroup"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;careerManagedBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;careerManagedBy"> <rdfs:label xml:lang="en">career managed by</rdfs:label> <rdfs:comment xml:lang="en">Relates an Artist or MusicGroup to their PersonalManager. Inverse of managesCareerOf. Passman Ch. 3.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Artist"/> <rdf:Description rdf:about="&arl;MusicGroup"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;PersonalManager"/> <owl:inverseOf rdf:resource="&arl;managesCareerOf"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;signsArtist"> <rdfs:label xml:lang="en">signs artist</rdfs:label> <rdfs:comment xml:lang="en">Relates a RecordLabel (or MusicPublisher for songwriters) to an Artist (or Songwriter) they sign to a contract.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;RecordLabel"/> <rdf:Description rdf:about="&arl;MusicPublisher"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Artist"/> <rdf:Description rdf:about="&arl;Songwriter"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;isSignedTo"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isSignedTo"> <rdfs:label xml:lang="en">is signed to</rdfs:label> <rdfs:comment xml:lang="en">Relates an Artist (or Songwriter) to the RecordLabel (or MusicPublisher) they are signed with. Inverse of signsArtist.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Artist"/> <rdf:Description rdf:about="&arl;Songwriter"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;RecordLabel"/> <rdf:Description rdf:about="&arl;MusicPublisher"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;signsArtist"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;specifiesRoyalty"> <rdfs:label xml:lang="en">specifies royalty</rdfs:label> <rdfs:comment xml:lang="en">Links a contract (e.g., RecordingContract, PublishingContract) to the Royalty terms it defines. Passman Part II (Record Deals) and Part III (Publishing).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&arl;Royalty"/> <owl:inverseOf rdf:resource="&arl;royaltySpecifiedIn"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;royaltySpecifiedIn"> <rdfs:label xml:lang="en">royalty specified in</rdfs:label> <rdfs:comment xml:lang="en">Links Royalty terms back to the Contract that defines them. Inverse of specifiesRoyalty.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Royalty"/> <rdfs:range rdf:resource="&arl;Contract"/> <owl:inverseOf rdf:resource="&arl;specifiesRoyalty"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;coversTerritory"> <rdfs:label xml:lang="en">covers territory</rdfs:label> <rdfs:comment xml:lang="en">Specifies the geographical Territory an Agreement or License applies to. Passman discusses territory for record deals (p. 161), publishing (subpublishing, p. 264), etc.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Agreement"/> <rdfs:range rdf:resource="&arl;Territory"/> <owl:inverseOf rdf:resource="&arl;territoryCoveredBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;territoryCoveredBy"> <rdfs:label xml:lang="en">territory covered by</rdfs:label> <rdfs:comment xml:lang="en">Indicates which Agreements or Licenses apply to a specific Territory. Inverse of coversTerritory.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Territory"/> <rdfs:range rdf:resource="&arl;Agreement"/> <owl:inverseOf rdf:resource="&arl;coversTerritory"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasDealTerm"> <rdfs:label xml:lang="en">has deal term</rdfs:label> <rdfs:comment xml:lang="en">Links a Contract to its duration or term structure (initial period, options). Passman p. 111 (record deals), p. 299 (songwriter deals).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&arl;DealTerm"/> <owl:inverseOf rdf:resource="&arl;isTermOfDeal"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isTermOfDeal"> <rdfs:label xml:lang="en">is term of deal</rdfs:label> <rdfs:comment xml:lang="en">Links a DealTerm back to the Contract it belongs to. Inverse of hasDealTerm.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range rdf:resource="&arl;Contract"/> <owl:inverseOf rdf:resource="&arl;hasDealTerm"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;optionFor"> <rdfs:label xml:lang="en">option for</rdfs:label> <rdfs:comment xml:lang="en">Indicates that a DealTerm represents an option for a specific deliverable, typically a MusicRelease or number of MusicWorks. Passman p. 107-110.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicRelease"/> <rdf:Description rdf:about="&arl;DeliveryRequirement"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;optionDefinedInTerm"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;optionDefinedInTerm"> <rdfs:label xml:lang="en">option defined in term</rdfs:label> <rdfs:comment xml:lang="en">Relates a deliverable (MusicRelease, DeliveryRequirement) back to the DealTerm that specifies it as an option. Inverse of optionFor.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicRelease"/> <rdf:Description rdf:about="&arl;DeliveryRequirement"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;DealTerm"/> <owl:inverseOf rdf:resource="&arl;optionFor"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;administersWork"> <rdfs:label xml:lang="en">administers work</rdfs:label> <rdfs:comment xml:lang="en">Relates a MusicPublisher or AdministrationAgreement to the MusicWork(s) being administered. Passman p. 187, p. 310.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicPublisher"/> <rdf:Description rdf:about="&arl;AdministrationAgreement"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;MusicWork"/> <owl:inverseOf rdf:resource="&arl;workAdministeredBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;workAdministeredBy"> <rdfs:label xml:lang="en">work administered by</rdfs:label> <rdfs:comment xml:lang="en">Relates a MusicWork to the MusicPublisher or AdministrationAgreement that administers it. Inverse of administersWork.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicWork"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicPublisher"/> <rdf:Description rdf:about="&arl;AdministrationAgreement"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;administersWork"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;grantsLicense"> <rdfs:label xml:lang="en">grants license</rdfs:label> <rdfs:comment xml:lang="en">Relates a licensor (EPMO) to the LicenseAgreement they are granting.</rdfs:comment> <rdfs:domain rdf:resource="&arl;EPMO"/> <rdfs:range rdf:resource="&arl;LicenseAgreement"/> <owl:inverseOf rdf:resource="&arl;licenseGrantedBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;licenseGrantedBy"> <rdfs:label xml:lang="en">license granted by</rdfs:label> <rdfs:comment xml:lang="en">Relates a LicenseAgreement to the EPMO that granted it. Inverse of grantsLicense.</rdfs:comment> <rdfs:domain rdf:resource="&arl;LicenseAgreement"/> <rdfs:range rdf:resource="&arl;EPMO"/> <owl:inverseOf rdf:resource="&arl;grantsLicense"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;specifiesFund"> <rdfs:label xml:lang="en">specifies fund</rdfs:label> <rdfs:comment xml:lang="en">Links a RecordingContract to a Fund, which includes recording costs and artist advance. Passman p. 98-99.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RecordingContract"/> <rdfs:range rdf:resource="&arl;Fund"/> <owl:inverseOf rdf:resource="&arl;fundSpecifiedIn"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;fundSpecifiedIn"> <rdfs:label xml:lang="en">fund specified in</rdfs:label> <rdfs:comment xml:lang="en">Links a Fund back to the RecordingContract that specifies it. Inverse of specifiesFund.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Fund"/> <rdfs:range rdf:resource="&arl;RecordingContract"/> <owl:inverseOf rdf:resource="&arl;specifiesFund"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasWriter"> <rdfs:label xml:lang="en">has writer</rdfs:label> <rdfs:comment xml:lang="en">Relates a MusicWork to its Songwriter(s).</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicWork"/> <rdfs:range rdf:resource="&arl;Songwriter"/> <owl:inverseOf rdf:resource="&arl;isWriterOf"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isWriterOf"> <rdfs:label xml:lang="en">is writer of</rdfs:label> <rdfs:comment xml:lang="en">Relates a Songwriter to the MusicWork(s) they have written. Inverse of hasWriter.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Songwriter"/> <rdfs:range rdf:resource="&arl;MusicWork"/> <owl:inverseOf rdf:resource="&arl;hasWriter"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasArtist"> <rdfs:label xml:lang="en">has artist</rdfs:label> <rdfs:comment xml:lang="en">Relates a Recording to its performing Artist(s).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Recording"/> <rdfs:range rdf:resource="&arl;Artist"/> <owl:inverseOf rdf:resource="&arl;performedOnRecording"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;performedOnRecording"> <rdfs:label xml:lang="en">performed on recording</rdfs:label> <rdfs:comment xml:lang="en">Relates an Artist to the Recording(s) they performed on. Inverse of hasArtist.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&arl;Recording"/> <owl:inverseOf rdf:resource="&arl;hasArtist"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isRecordingOf"> <rdfs:label xml:lang="en">is recording of</rdfs:label> <rdfs:comment xml:lang="en">Relates a Recording (master) to the MusicWork (song) it embodies.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Recording"/> <rdfs:range rdf:resource="&arl;MusicWork"/> <owl:inverseOf rdf:resource="&arl;hasRecording"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasRecording"> <rdfs:label xml:lang="en">has recording</rdfs:label> <rdfs:comment xml:lang="en">Relates a MusicWork to the Recording(s) that embody it. Inverse of isRecordingOf.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicWork"/> <rdfs:range rdf:resource="&arl;Recording"/> <owl:inverseOf rdf:resource="&arl;isRecordingOf"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;containsRecording"> <rdfs:label xml:lang="en">contains recording</rdfs:label> <rdfs:comment xml:lang="en">Relates a MusicRelease (e.g., album) to the Recordings it includes.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicRelease"/> <rdfs:range rdf:resource="&arl;Recording"/> <owl:inverseOf rdf:resource="&arl;recordingContainedInRelease"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;recordingContainedInRelease"> <rdfs:label xml:lang="en">recording contained in release</rdfs:label> <rdfs:comment xml:lang="en">Relates a Recording to the MusicRelease(s) it is part of. Inverse of containsRecording.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Recording"/> <rdfs:range rdf:resource="&arl;MusicRelease"/> <owl:inverseOf rdf:resource="&arl;containsRecording"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;signsContract"> <rdfs:label xml:lang="en">signs contract</rdfs:label> <rdfs:comment xml:lang="en">General property linking an EPMO to a Contract they are a party to.</rdfs:comment> <rdfs:domain rdf:resource="&arl;EPMO"/> <rdfs:range rdf:resource="&arl;Contract"/> <owl:inverseOf rdf:resource="&arl;contractSignedBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;contractSignedBy"> <rdfs:label xml:lang="en">contract signed by</rdfs:label> <rdfs:comment xml:lang="en">Relates a Contract to the EPMO(s) who signed it. Inverse of signsContract.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&arl;EPMO"/> <owl:inverseOf rdf:resource="&arl;signsContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;partiesInvolved"> <rdfs:label xml:lang="en">parties involved</rdfs:label> <rdfs:comment xml:lang="en">Specifies the EPMOs (Persons or Organizations) that are parties to an Agreement.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Agreement"/> <rdfs:range rdf:resource="&arl;EPMO"/> <owl:inverseOf rdf:resource="&arl;isPartyToAgreement"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isPartyToAgreement"> <rdfs:label xml:lang="en">is party to agreement</rdfs:label> <rdfs:comment xml:lang="en">Indicates an EPMO is a party to a specific Agreement. Inverse of partiesInvolved.</rdfs:comment> <rdfs:domain rdf:resource="&arl;EPMO"/> <rdfs:range rdf:resource="&arl;Agreement"/> <owl:inverseOf rdf:resource="&arl;partiesInvolved"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;specifiesAdvance"> <rdfs:label xml:lang="en">specifies advance</rdfs:label> <rdfs:comment xml:lang="en">Links a contract (e.g., RecordingContract, PublishingContract) to an Advance payment. Passman p. 77, p. 98, p. 301.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&arl;Advance"/> <owl:inverseOf rdf:resource="&arl;advanceSpecifiedInContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;advanceSpecifiedInContract"> <rdfs:label xml:lang="en">advance specified in contract</rdfs:label> <rdfs:comment xml:lang="en">Links an Advance to the Contract that specifies it. Inverse of specifiesAdvance.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Advance"/> <rdfs:range rdf:resource="&arl;Contract"/> <owl:inverseOf rdf:resource="&arl;specifiesAdvance"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasManager"> <rdfs:label xml:lang="en">has manager</rdfs:label> <rdfs:comment xml:lang="en">Relates an Artist to their PersonalManager. Consider using hasTeamMember with range PersonalManager for consistency.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&arl;PersonalManager"/> <owl:inverseOf rdf:resource="&arl;managesArtist"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;managesArtist"> <rdfs:label xml:lang="en">manages artist</rdfs:label> <rdfs:comment xml:lang="en">Relates a PersonalManager to the Artist they manage. Inverse of hasManager.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PersonalManager"/> <rdfs:range rdf:resource="&arl;Artist"/> <owl:inverseOf rdf:resource="&arl;hasManager"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasControlledCompositionClause"> <rdfs:label xml:lang="en">has controlled composition clause</rdfs:label> <rdfs:comment xml:lang="en">Links a RecordingContract to its ControlledCompositionClause. Passman p. 275-283.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RecordingContract"/> <rdfs:range rdf:resource="&arl;ControlledCompositionClause"/> <owl:inverseOf rdf:resource="&arl;controlledCompositionClauseInContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;controlledCompositionClauseInContract"> <rdfs:label xml:lang="en">controlled composition clause in contract</rdfs:label> <rdfs:comment xml:lang="en">Links a ControlledCompositionClause to the RecordingContract it is part of. Inverse of hasControlledCompositionClause.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ControlledCompositionClause"/> <rdfs:range rdf:resource="&arl;RecordingContract"/> <owl:inverseOf rdf:resource="&arl;hasControlledCompositionClause"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;artistHasGenre"> <rdfs:label xml:lang="en">artist has genre</rdfs:label> <rdfs:comment xml:lang="en">Associates an Artist with one or more musical Genres.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&arl;Genre"/> <owl:inverseOf rdf:resource="&arl;genreOfArtist"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;genreOfArtist"> <rdfs:label xml:lang="en">genre of artist</rdfs:label> <rdfs:comment xml:lang="en">Associates a Genre with Artists who perform in that genre. Inverse of artistHasGenre.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Genre"/> <rdfs:range rdf:resource="&arl;Artist"/> <owl:inverseOf rdf:resource="&arl;artistHasGenre"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasPayOrPlayClause"> <rdfs:label xml:lang="en">has pay or play clause</rdfs:label> <rdfs:comment xml:lang="en">Links a contract (typically RecordingContract or film composer agreement) to a PayOrPlayProvision. Passman p. 110.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&arl;PayOrPlayProvision"/> <owl:inverseOf rdf:resource="&arl;payOrPlayClauseInContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;payOrPlayClauseInContract"> <rdfs:label xml:lang="en">pay or play clause in contract</rdfs:label> <rdfs:comment xml:lang="en">Links a PayOrPlayProvision to the Contract it is part of. Inverse of hasPayOrPlayClause.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PayOrPlayProvision"/> <rdfs:range rdf:resource="&arl;Contract"/> <owl:inverseOf rdf:resource="&arl;hasPayOrPlayClause"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasThreeSixtyProvision"> <rdfs:label xml:lang="en">has 360 provision</rdfs:label> <rdfs:comment xml:lang="en">Links a RecordingContract to a ThreeSixtyRightProvision where the label participates in non-record income. Passman p. 91-93.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RecordingContract"/> <rdfs:range rdf:resource="&arl;ThreeSixtyRightProvision"/> <owl:inverseOf rdf:resource="&arl;threeSixtyProvisionInContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;threeSixtyProvisionInContract"> <rdfs:label xml:lang="en">360 provision in contract</rdfs:label> <rdfs:comment xml:lang="en">Links a ThreeSixtyRightProvision to the RecordingContract it is part of. Inverse of hasThreeSixtyProvision.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ThreeSixtyRightProvision"/> <rdfs:range rdf:resource="&arl;RecordingContract"/> <owl:inverseOf rdf:resource="&arl;hasThreeSixtyProvision"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;grantsParticipationIn"> <rdfs:label xml:lang="en">grants participation in</rdfs:label> <rdfs:comment xml:lang="en">Specifies the AncillaryIncomeStream (e.g., touring, merch) a ThreeSixtyRightProvision allows the label to participate in.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ThreeSixtyRightProvision"/> <rdfs:range rdf:resource="&arl;AncillaryIncomeStream"/> <owl:inverseOf rdf:resource="&arl;participationGrantedByProvision"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;participationGrantedByProvision"> <rdfs:label xml:lang="en">participation granted by provision</rdfs:label> <rdfs:comment xml:lang="en">Relates an AncillaryIncomeStream to the ThreeSixtyRightProvision that grants participation in it. Inverse of grantsParticipationIn.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AncillaryIncomeStream"/> <rdfs:range rdf:resource="&arl;ThreeSixtyRightProvision"/> <owl:inverseOf rdf:resource="&arl;grantsParticipationIn"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasReversionClause"> <rdfs:label xml:lang="en">has reversion clause</rdfs:label> <rdfs:comment xml:lang="en">Links a PublishingContract (or SongwriterAgreement) to a ReversionClause detailing how/when copyrights revert to the songwriter. Passman p. 307-309.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PublishingAgreement"/> <rdfs:range rdf:resource="&arl;ReversionClause"/> <owl:inverseOf rdf:resource="&arl;reversionClauseInAgreement"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;reversionClauseInAgreement"> <rdfs:label xml:lang="en">reversion clause in agreement</rdfs:label> <rdfs:comment xml:lang="en">Links a ReversionClause to the PublishingAgreement it is part of. Inverse of hasReversionClause.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ReversionClause"/> <rdfs:range rdf:resource="&arl;PublishingAgreement"/> <owl:inverseOf rdf:resource="&arl;hasReversionClause"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;licensedForMediaType"> <rdfs:label xml:lang="en">licensed for media type</rdfs:label> <rdfs:comment xml:lang="en">Specifies the MediaType (e.g., Film, Television, Commercial) a SynchronizationLicense applies to. Passman p. 252.</rdfs:comment> <rdfs:domain rdf:resource="&arl;SynchronizationLicense"/> <rdfs:range rdf:resource="&arl;MediaType"/> <owl:inverseOf rdf:resource="&arl;mediaTypeLicensedVia"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;mediaTypeLicensedVia"> <rdfs:label xml:lang="en">media type licensed via</rdfs:label> <rdfs:comment xml:lang="en">Indicates a MediaType is subject to a SynchronizationLicense. Inverse of licensedForMediaType.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MediaType"/> <rdfs:range rdf:resource="&arl;SynchronizationLicense"/> <owl:inverseOf rdf:resource="&arl;licensedForMediaType"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;copyrightRegisteredFor"> <rdfs:label xml:lang="en">copyright registered for</rdfs:label> <rdfs:comment xml:lang="en">Links a CopyrightRegistration to the CreativeWork it pertains to. Passman p. 354.</rdfs:comment> <rdfs:domain rdf:resource="&arl;CopyrightRegistration"/> <rdfs:range rdf:resource="&arl;CreativeWork"/> <owl:inverseOf rdf:resource="&arl;creativeWorkHasRegistration"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;creativeWorkHasRegistration"> <rdfs:label xml:lang="en">creative work has registration</rdfs:label> <rdfs:comment xml:lang="en">Links a CreativeWork to its CopyrightRegistration. Inverse of copyrightRegisteredFor.</rdfs:comment> <rdfs:domain rdf:resource="&arl;CreativeWork"/> <rdfs:range rdf:resource="&arl;CopyrightRegistration"/> <owl:inverseOf rdf:resource="&arl;copyrightRegisteredFor"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;copyrightOwner"> <rdfs:label xml:lang="en">copyright owner</rdfs:label> <rdfs:comment xml:lang="en">Identifies the EPMO (Person or Organization) that owns a Copyright. Passman p. 215, p. 317.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Copyright"/> <rdfs:range rdf:resource="&arl;EPMO"/> <owl:inverseOf rdf:resource="&arl;ownsCopyright"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;ownsCopyright"> <rdfs:label xml:lang="en">owns copyright</rdfs:label> <rdfs:comment xml:lang="en">Relates an EPMO to a Copyright they own. Inverse of copyrightOwner.</rdfs:comment> <rdfs:domain rdf:resource="&arl;EPMO"/> <rdfs:range rdf:resource="&arl;Copyright"/> <owl:inverseOf rdf:resource="&arl;copyrightOwner"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasInternalAgreement"> <rdfs:label xml:lang="en">has internal agreement</rdfs:label> <rdfs:comment xml:lang="en">Links a MusicGroup to their MusicGroupInternalAgreement. Passman p. 365.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicGroup"/> <rdfs:range rdf:resource="&arl;MusicGroupInternalAgreement"/> <owl:inverseOf rdf:resource="&arl;internalAgreementForGroup"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;internalAgreementForGroup"> <rdfs:label xml:lang="en">internal agreement for group</rdfs:label> <rdfs:comment xml:lang="en">Links a MusicGroupInternalAgreement to the MusicGroup it governs. Inverse of hasInternalAgreement.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicGroupInternalAgreement"/> <rdfs:range rdf:resource="&arl;MusicGroup"/> <owl:inverseOf rdf:resource="&arl;hasInternalAgreement"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;agreementIncludesProvision"> <rdfs:label xml:lang="en">agreement includes provision</rdfs:label> <rdfs:comment xml:lang="en">A general property linking an Agreement to a specific ContractualProvision it contains.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Agreement"/> <rdfs:range rdf:resource="&arl;ContractualProvision"/> <owl:inverseOf rdf:resource="&arl;provisionIncludedInAgreement"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;provisionIncludedInAgreement"> <rdfs:label xml:lang="en">provision included in agreement</rdfs:label> <rdfs:comment xml:lang="en">Relates a ContractualProvision to the Agreement it is part of. Inverse of agreementIncludesProvision.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ContractualProvision"/> <rdfs:range rdf:resource="&arl;Agreement"/> <owl:inverseOf rdf:resource="&arl;agreementIncludesProvision"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;provisionAppliesTo"> <rdfs:label xml:lang="en">provision applies to</rdfs:label> <rdfs:comment xml:lang="en">Links a ContractualProvision to the entity or concept it governs (e.g., a MusicWork for Controlled Compositions, an Artist for Key Member).</rdfs:comment> <rdfs:domain rdf:resource="&arl;ContractualProvision"/> <rdfs:range rdf:resource="&owl;Thing"/> <owl:inverseOf rdf:resource="&arl;isGovernedByProvision"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isGovernedByProvision"> <rdfs:label xml:lang="en">is governed by provision</rdfs:label> <rdfs:comment xml:lang="en">Indicates an entity is subject to a specific ContractualProvision. Inverse of provisionAppliesTo.</rdfs:comment> <rdfs:domain rdf:resource="&owl;Thing"/> <rdfs:range rdf:resource="&arl;ContractualProvision"/> <owl:inverseOf rdf:resource="&arl;provisionAppliesTo"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;organizedBy"> <rdfs:label xml:lang="en">organized by</rdfs:label> <rdfs:comment xml:lang="en">Relates an Event (e.g., Tour) to the EPMO (e.g., Promoter, PersonalManager) responsible for its organization. Passman p. 395.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&arl;EPMO"/> <owl:inverseOf rdf:resource="&arl;organizesEvent"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;organizesEvent"> <rdfs:label xml:lang="en">organizes event</rdfs:label> <rdfs:comment xml:lang="en">Relates an EPMO to an Event they organize. Inverse of organizedBy.</rdfs:comment> <rdfs:domain rdf:resource="&arl;EPMO"/> <rdfs:range rdf:resource="&arl;Event"/> <owl:inverseOf rdf:resource="&arl;organizedBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;takesPlaceAt"> <rdfs:label xml:lang="en">takes place at</rdfs:label> <rdfs:comment xml:lang="en">Links an Event (e.g., Concert) to the Venue where it occurs.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&arl;Venue"/> <owl:inverseOf rdf:resource="&arl;hostsEvent"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hostsEvent"> <rdfs:label xml:lang="en">hosts event</rdfs:label> <rdfs:comment xml:lang="en">Relates a Venue to an Event it hosts. Inverse of takesPlaceAt.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Venue"/> <rdfs:range rdf:resource="&arl;Event"/> <owl:inverseOf rdf:resource="&arl;takesPlaceAt"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;eventFeaturesArtist"> <rdfs:label xml:lang="en">event features artist</rdfs:label> <rdfs:comment xml:lang="en">Relates an Event to the Artist(s) performing at it.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&arl;Artist"/> <owl:inverseOf rdf:resource="&arl;artistParticipatesInEvent"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;artistParticipatesInEvent"> <rdfs:label xml:lang="en">artist participates in event</rdfs:label> <rdfs:comment xml:lang="en">Relates an Artist to an Event they are participating in. Inverse of eventFeaturesArtist.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&arl;Event"/> <owl:inverseOf rdf:resource="&arl;eventFeaturesArtist"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;tourConsistsOf"> <rdfs:label xml:lang="en">tour consists of</rdfs:label> <rdfs:comment xml:lang="en">Relates a Tour to the individual Concerts that make up the tour.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Tour"/> <rdfs:range rdf:resource="&arl;Concert"/> <owl:inverseOf rdf:resource="&arl;concertPartOfTour"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;concertPartOfTour"> <rdfs:label xml:lang="en">concert part of tour</rdfs:label> <rdfs:comment xml:lang="en">Relates a Concert to the Tour it is part of. Inverse of tourConsistsOf.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Concert"/> <rdfs:range rdf:resource="&arl;Tour"/> <owl:inverseOf rdf:resource="&arl;tourConsistsOf"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;sellsTicket"> <rdfs:label xml:lang="en">sells ticket</rdfs:label> <rdfs:comment xml:lang="en">Relates an entity (Promoter, Venue, TicketingAgent) to a Ticket they sell.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Promoter"/> <rdf:Description rdf:about="&arl;Venue"/> <rdf:Description rdf:about="&arl;TicketingAgent"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;Ticket"/> <owl:inverseOf rdf:resource="&arl;ticketSoldBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;ticketSoldBy"> <rdfs:label xml:lang="en">ticket sold by</rdfs:label> <rdfs:comment xml:lang="en">Relates a Ticket to the entity that sold it. Inverse of sellsTicket.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Ticket"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Promoter"/> <rdf:Description rdf:about="&arl;Venue"/> <rdf:Description rdf:about="&arl;TicketingAgent"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;sellsTicket"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;ticketForEvent"> <rdfs:label xml:lang="en">ticket for event</rdfs:label> <rdfs:comment xml:lang="en">Links a Ticket to the specific Event it grants access to.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Ticket"/> <rdfs:range rdf:resource="&arl;Event"/> <owl:inverseOf rdf:resource="&arl;eventHasTicket"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;eventHasTicket"> <rdfs:label xml:lang="en">event has ticket</rdfs:label> <rdfs:comment xml:lang="en">Relates an Event to the Tickets sold for it. Inverse of ticketForEvent.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&arl;Ticket"/> <owl:inverseOf rdf:resource="&arl;ticketForEvent"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;licensesMerchandiseRightsTo"> <rdfs:label xml:lang="en">licenses merchandise rights to</rdfs:label> <rdfs:comment xml:lang="en">Relates an Artist (or their rights-holding entity) to a Merchandiser. Passman Ch. 24.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&arl;Merchandiser"/> <owl:inverseOf rdf:resource="&arl;merchandiseRightsLicensedFrom"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;merchandiseRightsLicensedFrom"> <rdfs:label xml:lang="en">merchandise rights licensed from</rdfs:label> <rdfs:comment xml:lang="en">Relates a Merchandiser to the Artist from whom they license rights. Inverse of licensesMerchandiseRightsTo.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Merchandiser"/> <rdfs:range rdf:resource="&arl;Artist"/> <owl:inverseOf rdf:resource="&arl;licensesMerchandiseRightsTo"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;sellsMerchandiseItem"> <rdfs:label xml:lang="en">sells merchandise item</rdfs:label> <rdfs:comment xml:lang="en">Relates a Merchandiser or Venue to a MerchandiseItem they sell.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Merchandiser"/> <rdf:Description rdf:about="&arl;Venue"/> <rdf:Description rdf:about="&arl;Artist"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;MerchandiseItem"/> <owl:inverseOf rdf:resource="&arl;merchandiseItemSoldBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;merchandiseItemSoldBy"> <rdfs:label xml:lang="en">merchandise item sold by</rdfs:label> <rdfs:comment xml:lang="en">Relates a MerchandiseItem to the entity that sells it. Inverse of sellsMerchandiseItem.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MerchandiseItem"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Merchandiser"/> <rdf:Description rdf:about="&arl;Venue"/> <rdf:Description rdf:about="&arl;Artist"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;sellsMerchandiseItem"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;royaltyAppliesTo"> <rdfs:label xml:lang="en">royalty applies to</rdfs:label> <rdfs:comment xml:lang="en">Specifies what a Royalty is paid on (e.g., a MusicRelease, a MusicWork, a MerchandiseItem).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Royalty"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicRelease"/> <rdf:Description rdf:about="&arl;MusicWork"/> <rdf:Description rdf:about="&arl;MerchandiseItem"/> <rdf:Description rdf:about="&arl;RevenueSource"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;subjectOfRoyalty"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;subjectOfRoyalty"> <rdfs:label xml:lang="en">subject of royalty</rdfs:label> <rdfs:comment xml:lang="en">Indicates a CreativeWork, MerchandiseItem or RevenueSource is subject to a Royalty. Inverse of royaltyAppliesTo.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicRelease"/> <rdf:Description rdf:about="&arl;MusicWork"/> <rdf:Description rdf:about="&arl;MerchandiseItem"/> <rdf:Description rdf:about="&arl;RevenueSource"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;Royalty"/> <owl:inverseOf rdf:resource="&arl;royaltyAppliesTo"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;advanceIsRecoupableFrom"> <rdfs:label xml:lang="en">advance is recoupable from</rdfs:label> <rdfs:comment xml:lang="en">Specifies the Royalty stream(s) or RevenueSource from which an Advance is recouped. Passman p. 77.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Advance"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Royalty"/> <rdf:Description rdf:about="&arl;RevenueSource"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;recoupsAdvance"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;recoupsAdvance"> <rdfs:label xml:lang="en">recoups advance</rdfs:label> <rdfs:comment xml:lang="en">Indicates a Royalty or RevenueSource is used to recoup an Advance. Inverse of advanceIsRecoupableFrom.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Royalty"/> <rdf:Description rdf:about="&arl;RevenueSource"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;Advance"/> <owl:inverseOf rdf:resource="&arl;advanceIsRecoupableFrom"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;costIsRecoupableFrom"> <rdfs:label xml:lang="en">cost is recoupable from</rdfs:label> <rdfs:comment xml:lang="en">Specifies the Royalty stream(s) or RevenueSource from which a RecoupableCost is recouped.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RecoupableCost"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Royalty"/> <rdf:Description rdf:about="&arl;RevenueSource"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;recoupsCost"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;recoupsCost"> <rdfs:label xml:lang="en">recoups cost</rdfs:label> <rdfs:comment xml:lang="en">Indicates a Royalty or RevenueSource is used to recoup a RecoupableCost. Inverse of costIsRecoupableFrom.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Royalty"/> <rdf:Description rdf:about="&arl;RevenueSource"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;RecoupableCost"/> <owl:inverseOf rdf:resource="&arl;costIsRecoupableFrom"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;licenseHasClause"> <rdfs:label xml:lang="en">license has clause</rdfs:label> <rdfs:comment xml:lang="en">Links a LicenseAgreement to a specific LicenseClause within it.</rdfs:comment> <rdfs:domain rdf:resource="&arl;LicenseAgreement"/> <rdfs:range rdf:resource="&arl;LicenseClause"/> <owl:inverseOf rdf:resource="&arl;clauseInLicense"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;clauseInLicense"> <rdfs:label xml:lang="en">clause in license</rdfs:label> <rdfs:comment xml:lang="en">Relates a LicenseClause to the LicenseAgreement it is part of. Inverse of licenseHasClause.</rdfs:comment> <rdfs:domain rdf:resource="&arl;LicenseClause"/> <rdfs:range rdf:resource="&arl;LicenseAgreement"/> <owl:inverseOf rdf:resource="&arl;licenseHasClause"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;publishingIncomeFromSource"> <rdfs:label xml:lang="en">publishing income from source</rdfs:label> <rdfs:comment xml:lang="en">Relates a MusicPublisher to the IncomeSourceType of their publishing revenue (e.g., Mechanical, Performance, Sync). Passman p. 190.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicPublisher"/> <rdfs:range rdf:resource="&arl;IncomeSourceType"/> <owl:inverseOf rdf:resource="&arl;sourceForPublishingIncome"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;sourceForPublishingIncome"> <rdfs:label xml:lang="en">source for publishing income</rdfs:label> <rdfs:comment xml:lang="en">Relates an IncomeSourceType to MusicPublishers who derive income from it. Inverse of publishingIncomeFromSource.</rdfs:comment> <rdfs:domain rdf:resource="&arl;IncomeSourceType"/> <rdfs:range rdf:resource="&arl;MusicPublisher"/> <owl:inverseOf rdf:resource="&arl;publishingIncomeFromSource"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;contractSpecifiesDeliveryRequirement"> <rdfs:label xml:lang="en">contract specifies delivery requirement</rdfs:label> <rdfs:comment xml:lang="en">Links a Contract (e.g., RecordingContract) to the DeliveryRequirements for creative works. Passman p. 115.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&arl;DeliveryRequirement"/> <owl:inverseOf rdf:resource="&arl;deliveryRequirementSpecifiedInContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;deliveryRequirementSpecifiedInContract"> <rdfs:label xml:lang="en">delivery requirement specified in contract</rdfs:label> <rdfs:comment xml:lang="en">Relates a DeliveryRequirement to the Contract that specifies it. Inverse of contractSpecifiesDeliveryRequirement.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DeliveryRequirement"/> <rdfs:range rdf:resource="&arl;Contract"/> <owl:inverseOf rdf:resource="&arl;contractSpecifiesDeliveryRequirement"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;clauseAppliesToMusicWork"> <rdfs:label xml:lang="en">clause applies to music work</rdfs:label> <rdfs:comment xml:lang="en">Specifically links a ControlledCompositionClause to the MusicWork(s) it governs.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ControlledCompositionClause"/> <rdfs:range rdf:resource="&arl;MusicWork"/> <owl:inverseOf rdf:resource="&arl;musicWorkHasControlledCompositionTerms"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;musicWorkHasControlledCompositionTerms"> <rdfs:label xml:lang="en">music work has controlled composition terms</rdfs:label> <rdfs:comment xml:lang="en">Links a MusicWork to the ControlledCompositionClause that applies to it. Inverse of clauseAppliesToMusicWork.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicWork"/> <rdfs:range rdf:resource="&arl;ControlledCompositionClause"/> <owl:inverseOf rdf:resource="&arl;clauseAppliesToMusicWork"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;escalationTriggeredBy"> <rdfs:label xml:lang="en">escalation triggered by</rdfs:label> <rdfs:comment xml:lang="en">Links a RoyaltyTier to the PerformanceMetricThreshold that triggers the escalated rate. Passman p. 97.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RoyaltyTier"/> <rdfs:range rdf:resource="&arl;PerformanceMetricThreshold"/> <owl:inverseOf rdf:resource="&arl;triggersRoyaltyTierEscalation"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;triggersRoyaltyTierEscalation"> <rdfs:label xml:lang="en">triggers royalty tier escalation</rdfs:label> <rdfs:comment xml:lang="en">Relates a PerformanceMetricThreshold to the RoyaltyTier whose escalation it triggers. Inverse of escalationTriggeredBy.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PerformanceMetricThreshold"/> <rdfs:range rdf:resource="&arl;RoyaltyTier"/> <owl:inverseOf rdf:resource="&arl;escalationTriggeredBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;optionExercisableBy"> <rdfs:label xml:lang="en">option exercisable by</rdfs:label> <rdfs:comment xml:lang="en">Indicates which party (typically RecordLabel or MusicPublisher) has the right to exercise an option in a DealTerm.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;RecordLabel"/> <rdf:Description rdf:about="&arl;MusicPublisher"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;canExerciseOptionInTerm"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;canExerciseOptionInTerm"> <rdfs:label xml:lang="en">can exercise option in term</rdfs:label> <rdfs:comment xml:lang="en">Indicates a RecordLabel or MusicPublisher can exercise an option defined in a DealTerm. Inverse of optionExercisableBy.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;RecordLabel"/> <rdf:Description rdf:about="&arl;MusicPublisher"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;DealTerm"/> <owl:inverseOf rdf:resource="&arl;optionExercisableBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;licenseGrantsUsageRight"> <rdfs:label xml:lang="en">license grants usage right</rdfs:label> <rdfs:comment xml:lang="en">Specifies the particular UsageRight (e.g., reproduce, distribute, publicly perform) granted by a LicenseAgreement.</rdfs:comment> <rdfs:domain rdf:resource="&arl;LicenseAgreement"/> <rdfs:range rdf:resource="&arl;UsageRight"/> <owl:inverseOf rdf:resource="&arl;usageRightGrantedByLicense"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;usageRightGrantedByLicense"> <rdfs:label xml:lang="en">usage right granted by license</rdfs:label> <rdfs:comment xml:lang="en">Relates a UsageRight to the LicenseAgreement that grants it. Inverse of licenseGrantsUsageRight.</rdfs:comment> <rdfs:domain rdf:resource="&arl;UsageRight"/> <rdfs:range rdf:resource="&arl;LicenseAgreement"/> <owl:inverseOf rdf:resource="&arl;licenseGrantsUsageRight"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;copyrightAppliesToTerritory"> <rdfs:label xml:lang="en">copyright applies to territory</rdfs:label> <rdfs:comment xml:lang="en">Specifies the Territory where a Copyright is valid.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Copyright"/> <rdfs:range rdf:resource="&arl;Territory"/> <owl:inverseOf rdf:resource="&arl;territoryOfCopyright"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;territoryOfCopyright"> <rdfs:label xml:lang="en">territory of copyright</rdfs:label> <rdfs:comment xml:lang="en">Indicates a Territory is covered by a Copyright. Inverse of copyrightAppliesToTerritory.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Territory"/> <rdfs:range rdf:resource="&arl;Copyright"/> <owl:inverseOf rdf:resource="&arl;copyrightAppliesToTerritory"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;royaltyHasTier"> <rdfs:label xml:lang="en">royalty has tier</rdfs:label> <rdfs:comment xml:lang="en">Links a Royalty to its various RoyaltyTiers (for escalations).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Royalty"/> <rdfs:range rdf:resource="&arl;RoyaltyTier"/> <owl:inverseOf rdf:resource="&arl;tierOfRoyalty"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;tierOfRoyalty"> <rdfs:label xml:lang="en">tier of royalty</rdfs:label> <rdfs:comment xml:lang="en">Relates a RoyaltyTier to the Royalty it belongs to. Inverse of royaltyHasTier.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RoyaltyTier"/> <rdfs:range rdf:resource="&arl;Royalty"/> <owl:inverseOf rdf:resource="&arl;royaltyHasTier"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isCrossCollateralizedWith"> <rdfs:label xml:lang="en">is cross-collateralized with</rdfs:label> <rdfs:comment xml:lang="en">Indicates that recoupment for one financial item (e.g., an Advance or Contract's deficit) can be made from another. Passman p. 89-91. This property is symmetric.</rdfs:comment> <rdf:type rdf:resource="&owl;SymmetricProperty"/> <rdfs:domain rdf:resource="&arl;FinancialConcept"/> <rdfs:range rdf:resource="&arl;FinancialConcept"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;contractIncludesExclusivity"> <rdfs:label xml:lang="en">contract includes exclusivity</rdfs:label> <rdfs:comment xml:lang="en">Links a Contract to its ExclusivityProvision. Passman p. 174 (record deals).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&arl;ExclusivityProvision"/> <owl:inverseOf rdf:resource="&arl;exclusivityProvisionInContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;exclusivityProvisionInContract"> <rdfs:label xml:lang="en">exclusivity provision in contract</rdfs:label> <rdfs:comment xml:lang="en">Relates an ExclusivityProvision to the Contract it is part of. Inverse of contractIncludesExclusivity.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ExclusivityProvision"/> <rdfs:range rdf:resource="&arl;Contract"/> <owl:inverseOf rdf:resource="&arl;contractIncludesExclusivity"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;contractIncludesReRecordingRestriction"> <rdfs:label xml:lang="en">contract includes re-recording restriction</rdfs:label> <rdfs:comment xml:lang="en">Links a RecordingContract to its ReRecordingRestrictionClause. Passman p. 178.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RecordingContract"/> <rdfs:range rdf:resource="&arl;ReRecordingRestrictionClause"/> <owl:inverseOf rdf:resource="&arl;reRecordingRestrictionInContract"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;reRecordingRestrictionInContract"> <rdfs:label xml:lang="en">re-recording restriction in contract</rdfs:label> <rdfs:comment xml:lang="en">Relates a ReRecordingRestrictionClause to the RecordingContract it is part of. Inverse of contractIncludesReRecordingRestriction.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ReRecordingRestrictionClause"/> <rdfs:range rdf:resource="&arl;RecordingContract"/> <owl:inverseOf rdf:resource="&arl;contractIncludesReRecordingRestriction"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasTerminationRightProvision"> <rdfs:label xml:lang="en">has termination right provision</rdfs:label> <rdfs:comment xml:lang="en">Indicates an Agreement or a Copyright grant is subject to a TerminationRightProvision. Passman p. 323, p. 348.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Agreement"/> <rdf:Description rdf:about="&arl;Copyright"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;TerminationRightProvision"/> <owl:inverseOf rdf:resource="&arl;terminationRightFor"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;terminationRightFor"> <rdfs:label xml:lang="en">termination right for</rdfs:label> <rdfs:comment xml:lang="en">Relates a TerminationRightProvision to the Agreement or Copyright grant it applies to. Inverse of hasTerminationRightProvision.</rdfs:comment> <rdfs:domain rdf:resource="&arl;TerminationRightProvision"/> <rdfs:range> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Agreement"/> <rdf:Description rdf:about="&arl;Copyright"/> </owl:unionOf> </owl:Class> </rdfs:range> <owl:inverseOf rdf:resource="&arl;hasTerminationRightProvision"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;actionPerformedBy"> <rdfs:domain rdf:resource="&arl;AgentAction"/> <rdfs:range rdf:resource="&arl;AIAgent"/> <rdfs:label xml:lang="en">action performed by</rdfs:label> <owl:inverseOf rdf:resource="&arl;performsAction"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;performsAction"> <rdfs:label xml:lang="en">performs action</rdfs:label> <rdfs:comment xml:lang="en">Relates an AI Agent to the AgentActions it performs. Inverse of actionPerformedBy.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AIAgent"/> <rdfs:range rdf:resource="&arl;AgentAction"/> <owl:inverseOf rdf:resource="&arl;actionPerformedBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;actionTargetsEntity"> <rdfs:domain rdf:resource="&arl;AgentAction"/> <rdfs:range rdf:resource="&owl;Thing"/> <rdfs:label xml:lang="en">action targets entity</rdfs:label> <owl:inverseOf rdf:resource="&arl;isTargetOfAction"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;isTargetOfAction"> <rdfs:label xml:lang="en">is target of action</rdfs:label> <rdfs:comment xml:lang="en">Indicates an entity is the target of an AgentAction. Inverse of actionTargetsEntity.</rdfs:comment> <rdfs:domain rdf:resource="&owl;Thing"/> <rdfs:range rdf:resource="&arl;AgentAction"/> <owl:inverseOf rdf:resource="&arl;actionTargetsEntity"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;feedConsumedBy"> <rdfs:domain rdf:resource="&arl;ContextualDataFeed"/> <rdfs:range rdf:resource="&arl;AIAgent"/> <rdfs:label xml:lang="en">feed consumed by</rdfs:label> <owl:inverseOf rdf:resource="&arl;consumesFeed"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;consumesFeed"> <rdfs:label xml:lang="en">consumes feed</rdfs:label> <rdfs:comment xml:lang="en">Relates an AI Agent to the ContextualDataFeeds it consumes. Inverse of feedConsumedBy.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AIAgent"/> <rdfs:range rdf:resource="&arl;ContextualDataFeed"/> <owl:inverseOf rdf:resource="&arl;feedConsumedBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;feedProvidesDataAbout"> <rdfs:domain rdf:resource="&arl;ContextualDataFeed"/> <rdfs:range rdf:resource="&owl;Class"/> <rdfs:label xml:lang="en">feed provides data about</rdfs:label> </owl:ObjectProperty> 
+    <owl:ObjectProperty rdf:about="&arl;advanceAssociatedWithDealTerm">
+        <rdfs:label xml:lang="en">advance associated with deal term</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a specific DealTerm (e.g., an option period) to the Advance payable for that term. Passman p.89-90 (advance formulas).</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;DealTerm"/>
+        <rdfs:range rdf:resource="&arl;Advance"/>
+        <owl:inverseOf rdf:resource="&arl;dealTermForAdvance"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="&arl;dealTermForAdvance">
+        <rdfs:label xml:lang="en">deal term for advance</rdfs:label>
+        <rdfs:domain rdf:resource="&arl;Advance"/>
+        <rdfs:range rdf:resource="&arl;DealTerm"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="&arl;costRecoupedAgainstSpecificIncome">
+        <rdfs:label xml:lang="en">cost recouped against specific income</rdfs:label>
+        <rdfs:comment xml:lang="en">Specifies that a RecoupableCost is recouped against a particular RevenueSource (e.g., TourSupportAdvance recouped from TouringIncome). Passman p.160 (tour support).</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;RecoupableCost"/>
+        <rdfs:range rdf:resource="&arl;RevenueSource"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="&arl;profitShareDistributionFeeAppliesTo">
+        <rdfs:label xml:lang="en">profit share distribution fee applies to</rdfs:label>
+        <rdfs:comment xml:lang="en">Indicates the RevenueSource(s) to which a distribution fee within a ProfitShareAgreement applies (typically US income). Passman p.164.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;DistributionFeeProvision"/> <!-- New Class -->
+        <rdfs:range rdf:resource="&arl;RevenueSource"/>
+    </owl:ObjectProperty>
     
-    <!-- Corrected Marketing Campaign Properties -->
-    <owl:ObjectProperty rdf:about="&arl;campaignTargetsGenericAsset">
-        <rdfs:label xml:lang="en">campaign targets generic asset</rdfs:label>
-        <rdfs:comment xml:lang="en">A general property indicating a marketing campaign targets some asset (Artist or MusicRelease).</rdfs:comment>
-        <rdfs:domain rdf:resource="&arl;MarketingCampaign"/>
-        <rdfs:range>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&arl;MusicRelease"/>
-                    <rdf:Description rdf:about="&arl;Artist"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:range>
-        <owl:inverseOf rdf:resource="&arl;isTargetOfMarketingCampaign"/>
+    <owl:ObjectProperty rdf:about="&arl;leavingMemberShareOfGroupDeficit">
+        <rdfs:label xml:lang="en">leaving member share of group deficit</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a LeavingMemberClause to the MonetaryAmountObject representing the departing member's pro-rata share of the group's unrecouped balance. Passman p.363-364.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;LeavingMemberClause"/>
+        <rdfs:range rdf:resource="&arl;MonetaryAmountObject"/>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="&arl;soundtrackArtist Royalty">
+        <rdfs:label xml:lang="en">soundtrack artist royalty</rdfs:label>
+        <rdfs:comment xml:lang="en">Links a SoundtrackAlbumParticipation (new class) to the specific Royalty terms for an artist on that soundtrack. Passman Ch.28.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;SoundtrackAlbumParticipation"/>
+        <rdfs:range rdf:resource="&arl;Royalty"/>
     </owl:ObjectProperty>
 
-    <owl:ObjectProperty rdf:about="&arl;targetsMusicRelease">
-        <rdfs:subPropertyOf rdf:resource="&arl;campaignTargetsGenericAsset"/>
-        <rdfs:label xml:lang="en">targets music release</rdfs:label>
-        <rdfs:domain rdf:resource="&arl;MarketingCampaign"/>
-        <rdfs:range rdf:resource="&arl;MusicRelease"/>
+    <owl:ObjectProperty rdf:about="&arl;producerReceivesRecordOneRoyalty">
+        <rdfs:label xml:lang="en">producer receives record one royalty</rdfs:label>
+        <rdfs:comment xml:lang="en">Indicates if a producer's royalty is paid from 'record one' after recoupment of recording costs at net artist rate. Passman p.108-109.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;ProducerAgreement"/>
+        <rdfs:range rdf:resource="&arl;Royalty"/> <!-- The producer's specific royalty -->
     </owl:ObjectProperty>
 
-    <owl:ObjectProperty rdf:about="&arl;targetsArtist">
-        <rdfs:subPropertyOf rdf:resource="&arl;campaignTargetsGenericAsset"/>
-        <rdfs:label xml:lang="en">targets artist</rdfs:label>
-        <rdfs:domain rdf:resource="&arl;MarketingCampaign"/>
-        <rdfs:range rdf:resource="&arl;Artist"/>
-    </owl:ObjectProperty>
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // New Datatype Properties for Pass 9
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+     
+    <owl:DatatypeProperty rdf:about="&arl;profitShareDistributionFeePercentage">
+        <rdfs:label xml:lang="en">profit share distribution fee percentage</rdfs:label>
+        <rdfs:comment xml:lang="en">The percentage of the distribution fee in a profit share deal. Passman p.164.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;DistributionFeeProvision"/>
+        <rdfs:range rdf:resource="&xsd;decimal"/>
+    </owl:DatatypeProperty>
 
-    <owl:ObjectProperty rdf:about="&arl;isTargetOfMarketingCampaign">
-        <rdfs:label xml:lang="en">is target of marketing campaign</rdfs:label>
-        <rdfs:comment xml:lang="en">Relates a MusicRelease or Artist to a MarketingCampaign targeting it. Inverse of campaignTargetsGenericAsset.</rdfs:comment>
+    <owl:DatatypeProperty rdf:about="&arl;producerRoyaltyRate">
+        <rdfs:label xml:lang="en">producer royalty rate</rdfs:label>
+        <rdfs:comment xml:lang="en">The royalty rate for a producer. Passman p.108.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;ProducerAgreement"/>
+        <rdfs:range rdf:resource="&xsd;decimal"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="&arl;mixerRoyaltyRate">
+        <rdfs:label xml:lang="en">mixer royalty rate</rdfs:label>
+        <rdfs:comment xml:lang="en">The royalty rate for a mixer, if applicable. Passman p.117.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;MixerAgreement"/>
+        <rdfs:range rdf:resource="&xsd;decimal"/>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="&arl;isRetroactiveToRecordOne">
+        <rdfs:label xml:lang="en">is retroactive to record one</rdfs:label>
+        <rdfs:comment xml:lang="en">Boolean indicating if a producer/mixer royalty is paid retroactively from record one after cost recoupment. Passman p.109.</rdfs:comment>
         <rdfs:domain>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&arl;MusicRelease"/>
-                    <rdf:Description rdf:about="&arl;Artist"/>
+                    <rdf:Description rdf:about="&arl;ProducerAgreement"/>
+                    <rdf:Description rdf:about="&arl;MixerAgreement"/>
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range rdf:resource="&arl;MarketingCampaign"/>
-        <owl:inverseOf rdf:resource="&arl;campaignTargetsGenericAsset"/>
-    </owl:ObjectProperty>
-    <!-- End Corrected Marketing Campaign Properties -->
-
-    <owl:ObjectProperty rdf:about="&arl;comprisesActivity"><rdfs:label xml:lang="en">comprises activity</rdfs:label><rdfs:domain rdf:resource="&arl;MarketingCampaign"/><rdfs:range rdf:resource="&arl;PromotionalActivity"/> <owl:inverseOf rdf:resource="&arl;activityPartOfCampaign"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;activityPartOfCampaign"> <rdfs:label xml:lang="en">activity part of campaign</rdfs:label> <rdfs:comment xml:lang="en">Relates a PromotionalActivity to the MarketingCampaign it belongs to. Inverse of comprisesActivity.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PromotionalActivity"/> <rdfs:range rdf:resource="&arl;MarketingCampaign"/> <owl:inverseOf rdf:resource="&arl;comprisesActivity"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;targetsAudienceSegment"><rdfs:label xml:lang="en">targets audience segment</rdfs:label><rdfs:domain rdf:resource="&arl;MarketingCampaign"/><rdfs:range rdf:resource="&arl;AudienceSegment"/> <owl:inverseOf rdf:resource="&arl;audienceSegmentTargetedBy"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;audienceSegmentTargetedBy"> <rdfs:label xml:lang="en">audience segment targeted by</rdfs:label> <rdfs:comment xml:lang="en">Relates an AudienceSegment to MarketingCampaigns that target it. Inverse of targetsAudienceSegment.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AudienceSegment"/> <rdfs:range rdf:resource="&arl;MarketingCampaign"/> <owl:inverseOf rdf:resource="&arl;targetsAudienceSegment"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasPerformanceMetric"><rdfs:label xml:lang="en">has performance metric</rdfs:label><rdfs:domain rdf:resource="&arl;MarketingCampaign"/><rdfs:range rdf:resource="&arl;FanEngagementMetric"/> <owl:inverseOf rdf:resource="&arl;metricForCampaign"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;metricForCampaign"> <rdfs:label xml:lang="en">metric for campaign</rdfs:label> <rdfs:comment xml:lang="en">Relates a FanEngagementMetric to the MarketingCampaign it measures. Inverse of hasPerformanceMetric.</rdfs:comment> <rdfs:domain rdf:resource="&arl;FanEngagementMetric"/> <rdfs:range rdf:resource="&arl;MarketingCampaign"/> <owl:inverseOf rdf:resource="&arl;hasPerformanceMetric"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasDecisionParameters"><rdfs:label xml:lang="en">has decision parameters</rdfs:label><rdfs:domain rdf:resource="&arl;AgentAction"/><rdfs:range rdf:resource="&arl;AandRDecisionParameters"/> <owl:inverseOf rdf:resource="&arl;parametersForDecisionAction"/> </owl:ObjectProperty> 
-    <owl:ObjectProperty rdf:about="&arl;parametersForDecisionAction"> <rdfs:label xml:lang="en">parameters for decision action</rdfs:label> <rdfs:comment xml:lang="en">Relates AandRDecisionParameters to the specific SignArtistDecisionAction they inform. Inverse of hasDecisionParameters.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AandRDecisionParameters"/> <rdfs:range rdf:resource="&arl;SignArtistDecisionAction"/> <owl:inverseOf rdf:resource="&arl;hasDecisionParameters"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;simulationContextOf"> <rdfs:label xml:lang="en">simulation context of</rdfs:label> <rdfs:comment xml:lang="en">Links a simulated entity to the SimulationRun it belongs to, distinguishing it from real-world data.</rdfs:comment> <rdfs:domain rdf:resource="&owl;Thing"/> <rdfs:range rdf:resource="&arl;SimulationRun"/> </owl:ObjectProperty>
-     <owl:ObjectProperty rdf:about="&arl;hasSimulatedAction"> <rdfs:label xml:lang="en">has simulated action</rdfs:label> <rdfs:comment xml:lang="en">Links a SimulationRun to the AgentActions that were part of that simulation.</rdfs:comment> <rdfs:domain rdf:resource="&arl;SimulationRun"/> <rdfs:range rdf:resource="&arl;AgentAction"/> </owl:ObjectProperty>
-     <owl:ObjectProperty rdf:about="&arl;predictedOutcomeForSimulation"> <rdfs:label xml:lang="en">predicted outcome for simulation</rdfs:label> <rdfs:comment xml:lang="en">Links a SimulationRun to the KPIs or PerformanceMetrics predicted as its outcome.</rdfs:comment> <rdfs:domain rdf:resource="&arl;SimulationRun"/> <rdfs:range> <owl:Class><owl:unionOf rdf:parseType="Collection"><rdf:Description rdf:about="&arl;KPI"/><rdf:Description rdf:about="&arl;PerformanceMetric"/></owl:unionOf></owl:Class> </rdfs:range> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasCurrency"> <rdfs:label xml:lang="en">has currency</rdfs:label> <rdfs:comment xml:lang="en">Specifies the currency for a monetary amount.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MonetaryAmount"/> <rdfs:range rdf:resource="&arl;CurrencyCode"/> </owl:ObjectProperty>
-     <owl:ObjectProperty rdf:about="&arl;hasActionStatusValue"> <rdfs:label xml:lang="en">has action status value</rdfs:label> <rdfs:comment xml:lang="en">Links an AgentAction to its specific status from the controlled vocabulary.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AgentAction"/> <rdfs:range rdf:resource="&arl;ActionStatusCode"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasHeatLevelValue"> <rdfs:label xml:lang="en">has heat level value</rdfs:label> <rdfs:comment xml:lang="en">Links an Artist to their specific heat level from the controlled vocabulary.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&arl;HeatLevelValue"/> </owl:ObjectProperty>
-     <owl:ObjectProperty rdf:about="&arl;hasDeliveryStandardValue"> <rdfs:label xml:lang="en">has delivery standard value</rdfs:label> <rdfs:comment xml:lang="en">Links a DeliveryRequirement to its specific standard from the controlled vocabulary.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DeliveryRequirement"/> <rdfs:range rdf:resource="&arl;DeliveryStandardValue"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasAdvanceObject"> <rdfs:label xml:lang="en">has advance object</rdfs:label> <rdfs:comment xml:lang="en">Links an entity (e.g. Advance class) to a MonetaryAmount representing the advance.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Advance"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasFundObject"> <rdfs:label xml:lang="en">has fund object</rdfs:label> <rdfs:comment xml:lang="en">Links a Fund to a MonetaryAmount representing the fund amount.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Fund"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasRecordingCostsObject"> <rdfs:label xml:lang="en">has recording costs object</rdfs:label> <rdfs:comment xml:lang="en">Links a Recording or RecoupableCost to a MonetaryAmount representing recording costs.</rdfs:comment> <rdfs:domain> <owl:Class><owl:unionOf rdf:parseType="Collection"><rdf:Description rdf:about="&arl;Recording"/><rdf:Description rdf:about="&arl;RecoupableCost"/></owl:unionOf></owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasPPDObject"> <rdfs:label xml:lang="en">has PPD object</rdfs:label> <rdfs:comment xml:lang="en">Links a MusicRelease to a MonetaryAmount representing its PPD.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicRelease"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasRecoupmentStatusObject"> <rdfs:label xml:lang="en">has recoupment status object</rdfs:label> <rdfs:comment xml:lang="en">Links an Artist or Contract to a MonetaryAmount representing their unrecouped balance.</rdfs:comment> <rdfs:domain> <owl:Class><owl:unionOf rdf:parseType="Collection"><rdf:Description rdf:about="&arl;Artist"/><rdf:Description rdf:about="&arl;Contract"/></owl:unionOf></owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasPayOrPlayPaymentObject"> <rdfs:label xml:lang="en">has pay or play payment object</rdfs:label> <rdfs:comment xml:lang="en">Links a PayOrPlayProvision to a MonetaryAmount representing the payment.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PayOrPlayProvision"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasControlledCompositionCapPerAlbumObject"> <rdfs:label xml:lang="en">has controlled composition cap per album object</rdfs:label> <rdfs:comment xml:lang="en">Links a ControlledCompositionClause to a MonetaryAmount representing the cap.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ControlledCompositionClause"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasLicenseFeeObject"> <rdfs:label xml:lang="en">has license fee object</rdfs:label> <rdfs:comment xml:lang="en">Links a LicenseAgreement to a MonetaryAmount representing the fee.</rdfs:comment> <rdfs:domain rdf:resource="&arl;LicenseAgreement"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasTicketPriceObject"> <rdfs:label xml:lang="en">has ticket price object</rdfs:label> <rdfs:comment xml:lang="en">Links a Ticket to a MonetaryAmount representing its price.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Ticket"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasGuaranteeAmountObject"> <rdfs:label xml:lang="en">has guarantee amount object</rdfs:label> <rdfs:comment xml:lang="en">Links a PerformanceAgreement to a MonetaryAmount representing the guarantee.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PerformanceAgreement"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasTourSupportAmountObject"> <rdfs:label xml:lang="en">has tour support amount object</rdfs:label> <rdfs:comment xml:lang="en">Links a TourSupportAdvance to a MonetaryAmount.</rdfs:comment> <rdfs:domain rdf:resource="&arl;TourSupportAdvance"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasMerchandiseItemPriceObject"> <rdfs:label xml:lang="en">has merchandise item price object</rdfs:label> <rdfs:comment xml:lang="en">Links a MerchandiseItem to a MonetaryAmount representing its price.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MerchandiseItem"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasMerchAdvanceObject"> <rdfs:label xml:lang="en">has merch advance object</rdfs:label> <rdfs:comment xml:lang="en">Links a MerchAdvance to a MonetaryAmount.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MerchAdvance"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasBudgetAmountObject"> <rdfs:label xml:lang="en">has budget amount object</rdfs:label> <rdfs:comment xml:lang="en">Links a MarketingCampaign to a MonetaryAmount representing its budget.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MarketingCampaign"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasCampaignROIObject"> <rdfs:label xml:lang="en">has campaign ROI object</rdfs:label> <rdfs:comment xml:lang="en">Links a MarketingCampaign to a MonetaryAmount representing its ROI.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MarketingCampaign"/> <rdfs:range rdf:resource="&arl;MonetaryAmount"/> </owl:ObjectProperty>
-    <owl:ObjectProperty rdf:about="&arl;hasInputParameters"> <rdfs:label xml:lang="en">has input parameters</rdfs:label> <rdfs:comment xml:lang="en">Links an AgentAction to its structured input parameters.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AgentAction"/> <rdfs:range rdf:resource="&owl;Thing"/> </owl:ObjectProperty> <!-- Range will be specialized for specific actions -->
-    <owl:ObjectProperty rdf:about="&arl;hasActionOutput"> <rdfs:label xml:lang="en">has action output</rdfs:label> <rdfs:comment xml:lang="en">Links an AgentAction to its structured output/result.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AgentAction"/> <rdfs:range rdf:resource="&owl;Thing"/> </owl:ObjectProperty> <!-- Range will be specialized for specific actions -->
-
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="&arl;recoupmentAtNetArtistRate">
+        <rdfs:label xml:lang="en">recoupment at net artist rate</rdfs:label>
+        <rdfs:comment xml:lang="en">Boolean indicating if recording costs for producer royalties are recouped at the net artist rate. Passman p.109.</rdfs:comment>
+        <rdfs:domain rdf:resource="&arl;ProducerAgreement"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </owl:DatatypeProperty>
 
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
-    // Datatype Properties (Full list integrated and refined)
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-    <owl:DatatypeProperty rdf:about="&arl;actionParameters"> <rdfs:domain rdf:resource="&arl;AgentAction"/> <rdfs:range rdf:resource="&xsd;string"/> <rdfs:label xml:lang="en">action parameters</rdfs:label> <rdfs:comment xml:lang="en">Could be a JSON string for complex parameters. Specific actions may use object properties to structured parameter classes instead.</rdfs:comment> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;actionOutcome"> <rdfs:domain rdf:resource="&arl;AgentAction"/> <rdfs:range rdf:resource="&xsd;string"/> <rdfs:label xml:lang="en">action outcome</rdfs:label> <rdfs:comment xml:lang="en">Could be a JSON string for complex outcomes or a summary. Specific actions may use object properties to structured outcome classes.</rdfs:comment> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;actionSuccessRate"> <rdfs:label xml:lang="en">action success rate</rdfs:label> <rdfs:comment xml:lang="en">Percentage of successful outcomes for a type of AgentAction.</rdfs:comment> <rdfs:domain rdf:resource="&arl;AIAgent"/> <rdfs:range rdf:resource="&xsd;decimal"/> <arl:potentialRLRewardMetric rdf:datatype="&xsd;string">Meta-reward for agent performance</arl:potentialRLRewardMetric> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;actionTimestamp">
-        <rdfs:label xml:lang="en">action timestamp</rdfs:label>
-        <rdfs:comment xml:lang="en">The date and time when the agent action occurred or was recorded.</rdfs:comment>
-        <rdfs:domain rdf:resource="&arl;AgentAction"/>
-        <rdfs:range rdf:resource="&xsd;dateTime"/>
-    </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;artistName"> <rdfs:label xml:lang="en">artist name</rdfs:label> <rdfs:comment xml:lang="en">The professional name of an Artist.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;buyoutTerms"> <rdfs:label xml:lang="en">buyout terms</rdfs:label> <rdfs:comment xml:lang="en">Details of a buyout provision for a leaving member of a MusicGroup. Passman p.370.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicGroupInternalAgreement"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;calculationPeriod"> <rdfs:label xml:lang="en">calculation period</rdfs:label> <rdfs:domain rdf:resource="&arl;PerformanceMetric"/> <rdfs:range rdf:resource="&xsd;duration"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;campaignROI"> <rdfs:label xml:lang="en">campaign ROI</rdfs:label> <rdfs:comment xml:lang="en">Calculated Return on Investment for a Marketing Campaign.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MarketingCampaign"/> <rdfs:range rdf:resource="&xsd;decimal"/> <arl:potentialRLRewardMetric rdf:datatype="&xsd;string">Direct reward</arl:potentialRLRewardMetric> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;collectionPeriodDuration"> <rdfs:label xml:lang="en">collection period duration</rdfs:label> <rdfs:comment xml:lang="en">The duration after term end during which a publisher can collect income for prior exploitations. Passman p.309.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ReversionClause"/> <rdfs:range rdf:resource="&xsd;duration"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;commissionRate"> <rdfs:label xml:lang="en">commission rate</rdfs:label> <rdfs:comment xml:lang="en">The percentage-based commission for a TeamMember like a PersonalManager or Agent. Passman p.34 (Managers), p.63 (Agents).</rdfs:comment> <rdfs:domain rdf:resource="&arl;ProfessionalServiceAgreement"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;contractNegotiationScore"> <rdfs:label xml:lang="en">contract negotiation score</rdfs:label> <rdfs:comment xml:lang="en">A score representing the favorability of negotiated contract terms (e.g., higher royalty rate, better advance).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Contract"/> <rdfs:range rdf:resource="&xsd;float"/> <arl:potentialRLRewardMetric rdf:datatype="&xsd;string">Direct reward for Legal/Negotiation AI</arl:potentialRLRewardMetric> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;controlledCompositionRateDetails"> <rdfs:label xml:lang="en">controlled composition rate details</rdfs:label> <rdfs:comment xml:lang="en">Specifies the mechanical rate for controlled compositions (e.g., '75% of statutory'). Passman p.278.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ControlledCompositionClause"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;copyrightOwnershipSplitDetails"> <rdfs:label xml:lang="en">copyright ownership split details</rdfs:label> <rdfs:comment xml:lang="en">Describes the percentage split of copyright ownership (e.g., '50/50 writer/publisher'). Passman p.298 (songwriter deals), p.317 (joint works).</rdfs:comment> <rdfs:domain rdf:resource="&arl;Copyright"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;copyrightRegistrationDate"> <rdfs:label xml:lang="en">copyright registration date</rdfs:label> <rdfs:comment xml:lang="en">The date on which a copyright was officially registered.</rdfs:comment> <rdfs:domain rdf:resource="&arl;CopyrightRegistration"/> <rdfs:range rdf:resource="&xsd;date"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;copyrightRegistrationNumber"> <rdf:type rdf:resource="&owl;FunctionalProperty"/> <rdfs:label xml:lang="en">copyright registration number</rdfs:label> <rdfs:comment xml:lang="en">The official registration number assigned by the Copyright Office. Passman p.354.</rdfs:comment> <rdfs:domain rdf:resource="&arl;CopyrightRegistration"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;copyrightTermDurationDetails"> <rdfs:label xml:lang="en">copyright term duration details</rdfs:label> <rdfs:comment xml:lang="en">Specifies the duration of the copyright (e.g., 'Life+70', '95YearsFromPublication'). Passman p.322-323.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Copyright"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;dealTermEndDate"> <rdfs:label xml:lang="en">deal term end date</rdfs:label> <rdfs:comment xml:lang="en">The end date of a DealTerm (may be conditional on delivery/recoupment).</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range rdf:resource="&xsd;date"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;dealTermStartDate"> <rdfs:label xml:lang="en">deal term start date</rdfs:label> <rdfs:comment xml:lang="en">The start date of a DealTerm.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range rdf:resource="&xsd;date"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;deliveryDueDate"> <rdfs:label xml:lang="en">delivery due date</rdfs:label> <rdfs:domain rdf:resource="&arl;DeliveryRequirement"/> <rdfs:range rdf:resource="&xsd;date"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;distributionFeeForProfitShare"> <rdfs:label xml:lang="en">distribution fee for profit share</rdfs:label> <rdfs:comment xml:lang="en">The distribution fee deducted before calculating profits in a profit share deal. Passman p.164.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ProfitShareAgreement"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;downloadCount"> <rdfs:label xml:lang="en">download count</rdfs:label> <rdfs:comment xml:lang="en">Number of downloads for a Recording or MusicRelease over a period.</rdfs:comment> <rdfs:domain> <owl:Class><owl:unionOf rdf:parseType="Collection"><rdf:Description rdf:about="&arl;Recording"/><rdf:Description rdf:about="&arl;MusicRelease"/></owl:unionOf></owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&xsd;integer"/> <arl:potentialRLRewardMetric rdf:datatype="&xsd;string">Direct reward for promotion/A&amp;R</arl:potentialRLRewardMetric> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;duration"> <rdfs:label xml:lang="en">duration</rdfs:label> <rdfs:comment xml:lang="en">The playing time of a Recording or Event.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Recording"/> <rdf:Description rdf:about="&arl;Event"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&xsd;duration"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;escalatedRoyaltyRate"> <rdfs:label xml:lang="en">escalated royalty rate</rdfs:label> <rdfs:comment xml:lang="en">The new royalty rate once an escalation threshold is met. Passman p.97.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RoyaltyTier"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;eventEndDate"> <rdfs:label xml:lang="en">event end date</rdfs:label> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&xsd;dateTime"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;eventLocation"> <rdfs:label xml:lang="en">event location</rdfs:label> <rdfs:comment xml:lang="en">Text description of the location, or could link to a Location class.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;eventName"> <rdfs:label xml:lang="en">event name</rdfs:label> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;eventStartDate"> <rdfs:label xml:lang="en">event start date</rdfs:label> <rdfs:domain rdf:resource="&arl;Event"/> <rdfs:range rdf:resource="&xsd;dateTime"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;exclusivityRestrictionDetails"> <rdfs:label xml:lang="en">exclusivity restriction details</rdfs:label> <rdfs:comment xml:lang="en">Specific details of the exclusivity restriction.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ExclusivityProvision"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;fanBaseGrowthRate"> <rdfs:label xml:lang="en">fan base growth rate</rdfs:label> <rdfs:comment xml:lang="en">Percentage growth of an artist's fan base over a period.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&xsd;decimal"/> <arl:potentialRLRewardMetric rdf:datatype="&xsd;string">Direct reward for A&amp;R/Marketing</arl:potentialRLRewardMetric> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;feedLastRefreshed"> <rdfs:domain rdf:resource="&arl;ContextualDataFeed"/> <rdfs:range rdf:resource="&xsd;dateTime"/> <rdfs:label xml:lang="en">feed last refreshed</rdfs:label> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;feedSourceAPIEndpoint"> <rdfs:domain rdf:resource="&arl;ContextualDataFeed"/> <rdfs:range rdf:resource="&xsd;anyURI"/> <rdfs:label xml:lang="en">feed source API endpoint</rdfs:label> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;feedUpdateFrequency"> <rdfs:domain rdf:resource="&arl;ContextualDataFeed"/> <rdfs:range rdf:resource="&xsd;duration"/> <rdfs:label xml:lang="en">feed update frequency</rdfs:label> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;feeStructure"> <rdfs:label xml:lang="en">fee structure</rdfs:label> <rdfs:comment xml:lang="en">Describes the fee structure for a professional, e.g., 'hourly', 'percentage', 'flat fee'. Passman p.53 (Business Mgrs), p.59 (Attorneys).</rdfs:comment> <rdfs:domain rdf:resource="&arl;ProfessionalServiceAgreement"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty> 
-    <owl:DatatypeProperty rdf:about="&arl;genreName"> <rdfs:label xml:lang="en">genre name</rdfs:label> <rdfs:comment xml:lang="en">The name of a music Genre (e.g., 'Rock', 'Pop').</rdfs:comment> <rdfs:domain rdf:resource="&arl;Genre"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;groupNameOwnershipRule"> <rdfs:label xml:lang="en">group name ownership rule</rdfs:label> <rdfs:comment xml:lang="en">Describes the rule governing who owns/can use the MusicGroup's name upon breakup/departure. Passman p.366.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicGroupInternalAgreement"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;hallFeePercentage"> <rdfs:label xml:lang="en">hall fee percentage</rdfs:label> <rdfs:comment xml:lang="en">The percentage of merchandise gross sales retained by the venue. Passman p.424.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PerformanceAgreement"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;hasCurrencyValue"> <rdfs:label xml:lang="en">has currency value</rdfs:label> <rdfs:comment xml:lang="en">The numerical value of a monetary amount.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MonetaryAmount"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;incomeSourceDescription"> <rdfs:label xml:lang="en">income source description</rdfs:label> <rdfs:domain rdf:resource="&arl;IncomeSourceType"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isAtSource"> <rdfs:label xml:lang="en">is at source</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if royalties are calculated 'at source' in foreign territories. Passman p.268, p.95.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Royalty"/> <rdf:Description rdf:about="&arl;SubPublishingAgreement"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isCompulsoryLicense"> <rdfs:label xml:lang="en">is compulsory license</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if a MechanicalLicense is a compulsory license. Passman p.219.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MechanicalLicense"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isControlledComposition"> <rdfs:label xml:lang="en">is controlled composition</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if a MusicWork is a controlled composition. Passman p.276.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicWork"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isFirmTerm"> <rdfs:label xml:lang="en">is firm term</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if a DealTerm is a firm (committed) period versus an option period.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isKeyMember"> <rdfs:label xml:lang="en">is key member</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if an Artist is a key member of a MusicGroup. Passman p.361.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Artist"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isOptionExercised"> <rdfs:label xml:lang="en">is option exercised</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if a contractual option has been exercised. Passman p.107.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isRecouped"> <rdfs:label xml:lang="en">is recouped</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if an Advance or RecoupableCost has been fully recouped. Passman p.77.</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Advance"/> <rdf:Description rdf:about="&arl;RecoupableCost"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;iswc"> <rdf:type rdf:resource="&owl;FunctionalProperty"/> <rdfs:label xml:lang="en">ISWC</rdfs:label> <rdfs:comment xml:lang="en">International Standard Musical Work Code.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MusicWork"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;isWorkForHireDesignated"> <rdfs:label xml:lang="en">is work for hire designated</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if a CreativeWork is designated as a work-for-hire in a contract. Passman p.319.</rdfs:comment> <rdfs:domain rdf:resource="&arl;CreativeWork"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;lateDeliveryPenaltyDetails"> <rdfs:label xml:lang="en">late delivery penalty details</rdfs:label> <rdfs:comment xml:lang="en">Details of penalties for late delivery of a MusicRelease. Passman p.113.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DeliveryRequirement"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;licenseClauseText"> <rdfs:label xml:lang="en">license clause text</rdfs:label> <rdfs:comment xml:lang="en">The specific text of a clause within a license.</rdfs:comment> <rdfs:domain rdf:resource="&arl;LicenseClause"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;licenseTermDuration"> <rdfs:label xml:lang="en">license term duration</rdfs:label> <rdfs:comment xml:lang="en">The duration of a LicenseAgreement.</rdfs:comment> <rdfs:domain rdf:resource="&arl;LicenseAgreement"/> <rdfs:range rdf:resource="&xsd;duration"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;mechanicalLicenseRate"> <rdfs:label xml:lang="en">mechanical license rate</rdfs:label> <rdfs:comment xml:lang="en">The rate for a mechanical license, often the statutory rate or a percentage thereof. Passman p.183, p.221.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MechanicalLicense"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;merchandiseItemType"> <rdfs:label xml:lang="en">merchandise item type</rdfs:label> <rdfs:comment xml:lang="en">E.g., 'T-Shirt', 'Poster', 'Digital Skin'.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MerchandiseItem"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;metricName"> <rdfs:label xml:lang="en">metric name</rdfs:label> <rdfs:domain rdf:resource="&arl;PerformanceMetric"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;metricUnit"> <rdfs:label xml:lang="en">metric unit</rdfs:label> <rdfs:domain rdf:resource="&arl;PerformanceMetric"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;metricValue"> <rdfs:label xml:lang="en">metric value</rdfs:label> <rdfs:domain rdf:resource="&arl;PerformanceMetric"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;numberOfUnitsRequired"> <rdfs:label xml:lang="en">number of units required</rdfs:label> <rdfs:comment xml:lang="en">Number of recordings or works to be delivered under a contract term.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DeliveryRequirement"/> <rdfs:range rdf:resource="&xsd;integer"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;optionConditionDescription"> <rdfs:label xml:lang="en">option condition description</rdfs:label> <rdfs:comment xml:lang="en">Text describing conditions for exercising an option.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;optionPickupDate"> <rdfs:label xml:lang="en">option pickup date</rdfs:label> <rdfs:comment xml:lang="en">The date by which an option in a DealTerm must be exercised.</rdfs:comment> <rdfs:domain rdf:resource="&arl;DealTerm"/> <rdfs:range rdf:resource="&xsd;date"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;productTypeRequired">
-        <rdfs:label xml:lang="en">product type required</rdfs:label>
-        <rdfs:comment xml:lang="en">The type of product required for delivery (e.g., 'Album', 'EP', 'MasterRecording').</rdfs:comment>
-        <rdfs:domain rdf:resource="&arl;DeliveryRequirement"/>
-        <rdfs:range rdf:resource="&xsd;string"/> 
-    </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;profitSharePercentageArtist"> <rdfs:label xml:lang="en">profit share percentage artist</rdfs:label> <rdfs:comment xml:lang="en">The artist's percentage share in a profit share deal. Passman p.162.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ProfitShareAgreement"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;profitSharePercentageLabel"> <rdfs:label xml:lang="en">profit share percentage label</rdfs:label> <rdfs:comment xml:lang="en">The label's percentage share in a profit share deal.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ProfitShareAgreement"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;profitSplitDetails"> <rdfs:label xml:lang="en">profit split details</rdfs:label> <rdfs:comment xml:lang="en">Describes how profits are split among members of a MusicGroup or in a ProfitShareAgreement. Passman p.367 (groups), p.162 (label deals).</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicGroupInternalAgreement"/> <rdf:Description rdf:about="&arl;ProfitShareAgreement"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;publisherSharePercentage"> <rdfs:label xml:lang="en">publisher share percentage</rdfs:label> <rdfs:comment xml:lang="en">The music publisher's percentage share of publishing income. Passman p.188, p.292.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PublishingSplit"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;rateLockDateType">
-        <rdfs:label xml:lang="en">rate lock date type</rdfs:label>
-        <rdfs:comment xml:lang="en">Specifies when the mechanical rate is locked (e.g., 'Date of Recording', 'Date of Release'). Passman p.279.</rdfs:comment>
-        <rdfs:domain rdf:resource="&arl;ControlledCompositionClause"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;recoupmentOrder"> <rdfs:label xml:lang="en">recoupment order</rdfs:label> <rdfs:comment xml:lang="en">Priority or source for recouping an advance or cost.</rdfs:comment> <rdfs:domain rdf:resource="&arl;RecoupableCost"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;reRecordingRestrictionDuration"> <rdfs:label xml:lang="en">re-recording restriction duration</rdfs:label> <rdfs:comment xml:lang="en">The duration of the re-recording restriction. Passman p.178.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ReRecordingRestrictionClause"/> <rdfs:range rdf:resource="&xsd;duration"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;retentionPeriodDuration"> <rdfs:label xml:lang="en">retention period duration</rdfs:label> <rdfs:comment xml:lang="en">The duration for which a publisher retains rights after the main term ends, before reversion. Passman p.308.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ReversionClause"/> <rdfs:range rdf:resource="&xsd;duration"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;reversionConditionDetails"> <rdfs:label xml:lang="en">reversion condition details</rdfs:label> <rdfs:comment xml:lang="en">Specifies the conditions under which copyright reverts to the songwriter. Passman p.307.</rdfs:comment> <rdfs:domain rdf:resource="&arl;ReversionClause"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;royaltyCalculationBasis"> <rdfs:label xml:lang="en">royalty calculation basis</rdfs:label> <rdfs:comment xml:lang="en">The basis on which a royalty is calculated (e.g., 'PPD', 'Net Receipts'). Passman p.74.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Royalty"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;royaltyRateValue"> <rdfs:label xml:lang="en">royalty rate value</rdfs:label> <rdfs:comment xml:lang="en">The numerical value of the royalty rate, typically a percentage. Passman p.74, p.96.</rdfs:comment> <rdfs:domain rdf:resource="&arl;Royalty"/> <rdfs:range rdf:resource="&xsd;decimal"/> <arl:potentialRLRewardMetric rdf:datatype="&xsd;string">Can be part of negotiation reward</arl:potentialRLRewardMetric> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;scenarioDescription"> <rdfs:label xml:lang="en">scenario description</rdfs:label> <rdfs:comment xml:lang="en">A textual description of the what-if scenario being simulated.</rdfs:comment> <rdfs:domain rdf:resource="&arl;SimulationRun"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;sellOffPeriodDuration"> <rdfs:label xml:lang="en">sell-off period duration</rdfs:label> <rdfs:comment xml:lang="en">Duration merchandiser can sell remaining stock after term. Passman p.430 (merch), p.275 (print).</rdfs:comment> <rdfs:domain> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MerchandisingAgreement"/> <rdf:Description rdf:about="&arl;LicenseAgreement"/> </owl:unionOf> </owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&xsd;duration"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;sharesInBlackBoxMonies"> <rdfs:label xml:lang="en">shares in black box monies</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if an entity shares in "black box" unclaimed monies. Passman p.270.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PublishingAgreement"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;simulationID"> <rdfs:label xml:lang="en">simulation ID</rdfs:label> <rdfs:comment xml:lang="en">A unique identifier for a simulation run.</rdfs:comment> <rdfs:domain rdf:resource="&arl;SimulationRun"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;simulationInputParameters"> <rdfs:label xml:lang="en">simulation input parameters</rdfs:label> <rdfs:comment xml:lang="en">JSON string detailing the input parameters for the simulation.</rdfs:comment> <rdfs:domain rdf:resource="&arl;SimulationRun"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;simulationRunTimestamp"> <rdfs:label xml:lang="en">simulation run timestamp</rdfs:label> <rdfs:domain rdf:resource="&arl;SimulationRun"/> <rdfs:range rdf:resource="&xsd;dateTime"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;statutoryRateApplies"> <rdfs:label xml:lang="en">statutory rate applies</rdfs:label> <rdfs:comment xml:lang="en">Boolean indicating if the statutory mechanical rate applies. Passman p.221.</rdfs:comment> <rdfs:domain rdf:resource="&arl;MechanicalLicense"/> <rdfs:range rdf:resource="&xsd;boolean"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;streamingCount"> <rdfs:label xml:lang="en">streaming count</rdfs:label> <rdfs:comment xml:lang="en">Number of streams for a Recording or MusicRelease over a period.</rdfs:comment> <rdfs:domain> <owl:Class><owl:unionOf rdf:parseType="Collection"><rdf:Description rdf:about="&arl;Recording"/><rdf:Description rdf:about="&arl;MusicRelease"/></owl:unionOf></owl:Class> </rdfs:domain> <rdfs:range rdf:resource="&xsd;integer"/> <arl:potentialRLRewardMetric rdf:datatype="&xsd;string">Direct reward for promotion/A&amp;R</arl:potentialRLRewardMetric> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;syncUsageDetails"> <rdfs:label xml:lang="en">sync usage details</rdfs:label> <rdfs:comment xml:lang="en">Describes how the music will be used in the visual media.</rdfs:comment> <rdfs:domain rdf:resource="&arl;SynchronizationLicense"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;teamMemberRole"> <rdfs:label xml:lang="en">team member role</rdfs:label> <rdfs:comment xml:lang="en">The specific role of a TeamMember (e.g., 'Personal Manager', 'Attorney').</rdfs:comment> <rdfs:domain rdf:resource="&arl;TeamMember"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;terminationWindowEndDate"> <rdfs:label xml:lang="en">termination window end date</rdfs:label> <rdfs:comment xml:lang="en">The end date of the window during which a copyright termination notice can be sent.</rdfs:comment> <rdfs:domain rdf:resource="&arl;TerminationRightProvision"/> <rdfs:range rdf:resource="&xsd;date"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;terminationWindowStartDate"> <rdfs:label xml:lang="en">termination window start date</rdfs:label> <rdfs:comment xml:lang="en">The start date of the window during which a copyright termination notice can be sent. Passman p.348.</rdfs:comment> <rdfs:domain rdf:resource="&arl;TerminationRightProvision"/> <rdfs:range rdf:resource="&xsd;date"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;thresholdMetric">
-        <rdfs:label xml:lang="en">threshold metric</rdfs:label>
-        <rdfs:comment xml:lang="en">The specific metric type for which a threshold is defined (e.g., 'album_sales', 'monthly_streams').</rdfs:comment>
-        <rdfs:domain rdf:resource="&arl;PerformanceMetricThreshold"/>
-        <rdfs:range rdf:resource="&xsd;string"/>
-    </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;thresholdValue">
-        <rdfs:label xml:lang="en">threshold value</rdfs:label>
-        <rdfs:comment xml:lang="en">The numerical value of the threshold for the specified metric.</rdfs:comment>
-        <rdfs:domain rdf:resource="&arl;PerformanceMetricThreshold"/>
-        <rdfs:range rdf:resource="&xsd;decimal"/>
-    </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;title"> <rdfs:label xml:lang="en">title</rdfs:label> <rdfs:comment xml:lang="en">The title of a CreativeWork.</rdfs:comment> <rdfs:domain rdf:resource="&arl;CreativeWork"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;venueCapacity"> <rdfs:label xml:lang="en">venue capacity</rdfs:label> <rdfs:domain rdf:resource="&arl;Venue"/> <rdfs:range rdf:resource="&xsd;integer"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;venueName"> <rdfs:label xml:lang="en">venue name</rdfs:label> <rdfs:domain rdf:resource="&arl;Venue"/> <rdfs:range rdf:resource="&xsd;string"/> </owl:DatatypeProperty>
-    <owl:DatatypeProperty rdf:about="&arl;writerSharePercentage"> <rdfs:label xml:lang="en">writer share percentage</rdfs:label> <rdfs:comment xml:lang="en">The songwriter's percentage share of publishing income. Passman p.188, p.292.</rdfs:comment> <rdfs:domain rdf:resource="&arl;PublishingSplit"/> <rdfs:range rdf:resource="&xsd;decimal"/> </owl:DatatypeProperty>
-    <!-- Datatype Properties that were commented out before because they were changed to Object Properties due to controlled vocabs, kept here for reference if needed -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;actionStatus"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;heatLevel"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;deliveryStandard"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;syncLicenseExclusivityType"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;exclusivityActivityType"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;advanceType"/> -->
-    <!-- Datatype properties that were changed to object properties due to MonetaryAmount class, kept here for reference -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;fundAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;recordingCosts"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;ppd"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;advanceAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;recoupmentStatusValue"/> --> <!-- Renamed from recoupmentStatus -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;payOrPlayPaymentAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;controlledCompositionCapPerAlbum"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;licenseFeeAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;ticketPrice"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;guaranteeAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;tourSupportAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;merchandiseItemPrice"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;merchAdvanceAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;hasBudgetAmount"/> -->
-    <!-- <owl:DatatypeProperty rdf:about="&arl;campaignROI"/> --> <!-- This was duplicated above, one for MonetaryAmount object prop, one for direct decimal. Keeping the object property one for ROI as it links to MonetaryAmount -->
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes (Shells and then Axioms)
+    // New and Refined Classes for Pass 9
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    <!-- Basic Class Declarations (Shells) -->
-    <owl:Class rdf:about="&arl;AIAgent"> <rdfs:label xml:lang="en">AI Agent</rdfs:label> <rdfs:comment xml:lang="en">Represents an AI agent within the system.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;EPMO"> <rdfs:label xml:lang="en">Entity Provision Monetary (EPMO)</rdfs:label> <rdfs:comment xml:lang="en">Passman's term for entities involved in money/rights.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;CreativeWork"> <rdfs:label xml:lang="en">Creative Work</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;Agreement"> <rdfs:label xml:lang="en">Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;FinancialConcept"> <rdfs:label xml:lang="en">Financial Concept</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MarketingConcept"> <rdfs:label xml:lang="en">Marketing Concept</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;RightsConcept"> <rdfs:label xml:lang="en">Rights Concept</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;Event"> <rdfs:label xml:lang="en">Event</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;AgentAction"><rdfs:label xml:lang="en">Agent Action</rdfs:label><rdfs:comment xml:lang="en">An action performed or proposed by an AI Agent.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;ContextualDataFeed"><rdfs:label xml:lang="en">Contextual Data Feed</rdfs:label><rdfs:comment xml:lang="en">A source of contextual data for AI Agents.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;ContractualProvision"> <rdfs:label xml:lang="en">Contractual Provision</rdfs:label> <rdfs:comment xml:lang="en">A specific clause or term within a contract or agreement.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;Genre"> <rdfs:label xml:lang="en">Genre</rdfs:label> <rdfs:comment xml:lang="en">A musical genre.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;PublishingSplit"> <rdfs:label xml:lang="en">Publishing Split</rdfs:label> <rdfs:comment xml:lang="en">Represents the division of publishing ownership and income for a MusicWork.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;Territory"> <rdfs:label xml:lang="en">Territory</rdfs:label> <rdfs:comment xml:lang="en">A geographical region relevant to contracts and rights.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;DealTerm"> <rdfs:label xml:lang="en">Deal Term</rdfs:label> <rdfs:comment xml:lang="en">A specific period (initial or option) within a contract, often with its own deliverables and financial terms.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;MediaType"> <rdfs:label xml:lang="en">Media Type</rdfs:label> <rdfs:comment xml:lang="en">The type of media in which music is used (e.g., Film, TV, Game).</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;CopyrightRegistration"> <rdfs:label xml:lang="en">Copyright Registration</rdfs:label> <rdfs:comment xml:lang="en">Represents the formal registration of a copyright.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;AncillaryIncomeStream"> <rdfs:label xml:lang="en">Ancillary Income Stream</rdfs:label> <rdfs:comment xml:lang="en">Non-record income streams like touring, merchandise, sponsorships, often part of 360 deals. Passman p.91.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;Ticket"> <rdfs:label xml:lang="en">Ticket</rdfs:label> <rdfs:comment xml:lang="en">A ticket for an event, such as a concert.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;MusicReleaseFormat"> <rdfs:label xml:lang="en">Music Release Format</rdfs:label> <rdfs:comment xml:lang="en">The physical or digital format of a music release (e.g., Vinyl, CD, Digital Stream).</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;LicenseClause"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">License Clause</rdfs:label> <rdfs:comment xml:lang="en">A specific clause within a LicenseAgreement.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;IncomeSourceType"> <rdfs:label xml:lang="en">Income Source Type</rdfs:label> <rdfs:comment xml:lang="en">Categorization of income sources, e.g., mechanical, performance, sync. Passman p.190.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;DeliveryRequirement"> <rdfs:label xml:lang="en">Delivery Requirement</rdfs:label> <rdfs:comment xml:lang="en">Specifies the product to be delivered under a contract term. Passman p.115.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;PerformanceMetricThreshold"> <rdfs:label xml:lang="en">Performance Metric Threshold</rdfs:label> <rdfs:comment xml:lang="en">A threshold based on a performance metric (e.g., sales, streams) that can trigger contractual changes like royalty escalations. Passman p.97.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;AandRDecisionParameters"> <rdfs:label xml:lang="en">A&amp;R Decision Parameters</rdfs:label> <rdfs:comment xml:lang="en">Parameters used by A&amp;R agents for making decisions, e.g., signing an artist.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;KPI"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Key Performance Indicator (KPI)</rdfs:label> <rdfs:comment xml:lang="en">A measurable value that demonstrates how effectively a company is achieving key business objectives.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;PerformanceMetric"> <rdfs:subClassOf rdf:resource="&arl;MarketingConcept"/> <rdfs:label xml:lang="en">Performance Metric</rdfs:label> <rdfs:comment xml:lang="en">A specific metric used to track performance, often associated with marketing or artist development.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;ArtistCareerState"> <rdfs:label xml:lang="en">Artist Career State</rdfs:label> <rdfs:comment xml:lang="en">A snapshot of an artist's career status at a point in time, used for simulation and RL.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;MusicReleaseLifecycleState"> <rdfs:label xml:lang="en">Music Release Lifecycle State</rdfs:label> <rdfs:comment xml:lang="en">The current phase of a music release (e.g., pre-release, active, catalog).</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;SimulationRun"> <rdfs:label xml:lang="en">Simulation Run</rdfs:label> <rdfs:comment xml:lang="en">Represents a specific execution of a what-if scenario using the digital twin.</rdfs:comment></owl:Class>
-    <owl:Class rdf:about="&arl;MonetaryAmount"> <rdfs:label xml:lang="en">Monetary Amount</rdfs:label> <rdfs:comment xml:lang="en">Represents a quantity of money, with a value and a currency.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;CurrencyCode"> <rdfs:label xml:lang="en">Currency Code</rdfs:label> <rdfs:comment xml:lang="en">Represents a currency (e.g., USD, EUR, JPY).</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;ActionStatusCode"> <rdfs:label xml:lang="en">Action Status Code</rdfs:label> <rdfs:comment xml:lang="en">A controlled vocabulary for the status of an AgentAction.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;HeatLevelValue"> <rdfs:label xml:lang="en">Heat Level Value</rdfs:label> <rdfs:comment xml:lang="en">A controlled vocabulary for an Artist's heat level.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;DeliveryStandardValue"> <rdfs:label xml:lang="en">Delivery Standard Value</rdfs:label> <rdfs:comment xml:lang="en">A controlled vocabulary for delivery standards (e.g., Commercially Satisfactory).</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;LaunchMarketingCampaignParameters"> <rdfs:label xml:lang="en">Launch Marketing Campaign Parameters</rdfs:label> <rdfs:comment xml:lang="en">Structured parameters for the LaunchMarketingCampaignAction.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;LaunchMarketingCampaignOutcome"> <rdfs:label xml:lang="en">Launch Marketing Campaign Outcome</rdfs:label> <rdfs:comment xml:lang="en">Structured outcome of the LaunchMarketingCampaignAction.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;ScoutArtistParameters"> <rdfs:label xml:lang="en">Scout Artist Parameters</rdfs:label> <rdfs:comment xml:lang="en">Structured parameters for the ScoutArtistAction.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;ScoutArtistOutcome"> <rdfs:label xml:lang="en">Scout Artist Outcome</rdfs:label> <rdfs:comment xml:lang="en">Structured outcome of the ScoutArtistAction, may include a list of potential artists or a detailed report on one.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;InitiateRoyaltyPaymentParameters"> <rdfs:label xml:lang="en">Initiate Royalty Payment Parameters</rdfs:label> <rdfs:comment xml:lang="en">Structured parameters for initiating a royalty payment.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;InitiateRoyaltyPaymentOutcome"> <rdfs:label xml:lang="en">Initiate Royalty Payment Outcome</rdfs:label> <rdfs:comment xml:lang="en">Structured outcome of initiating a royalty payment, e.g., payment confirmation.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;ExecuteSimulationScenarioParameters"> <rdfs:label xml:lang="en">Execute Simulation Scenario Parameters</rdfs:label> <rdfs:comment xml:lang="en">Structured parameters for executing a simulation scenario.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;ExecuteSimulationScenarioOutcome"> <rdfs:label xml:lang="en">Execute Simulation Scenario Outcome</rdfs:label> <rdfs:comment xml:lang="en">Structured outcome of a simulation scenario, including predicted KPIs.</rdfs:comment> </owl:Class>
+    <owl:Class rdf:about="&arl;ProfitShareAgreement">
+        <!-- Already a subclass of Contract -->
+        <rdfs:comment xml:lang="en">A contract where profits are split, rather than a royalty being paid. Passman p.162-166.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="&arl;Contract"/>
+        <rdfs:subClassOf>
+            <owl:Restriction><owl:onProperty rdf:resource="&arl;hasProfitSplitDetails"/><owl:someValuesFrom rdf:resource="&arl;PublishingSplit"/></owl:Restriction> <!-- Reusing PublishingSplit for simplicity, could be ProfitSplitDetails class -->
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction><owl:onProperty rdf:resource="&arl;hasDistributionFeeProvision"/><owl:allValuesFrom rdf:resource="&arl;DistributionFeeProvision"/></owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    <owl:ObjectProperty rdf:about="&arl;hasDistributionFeeProvision"><rdfs:domain rdf:resource="&arl;ProfitShareAgreement"/><rdfs:range rdf:resource="&arl;DistributionFeeProvision"/></owl:ObjectProperty>
     
-    <!-- Subclasses of AIAgent -->
-    <owl:Class rdf:about="&arl;AandRInsightScoutingAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">A&amp;amp;R Insight &amp;amp; Scouting Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;CreativeProductionSupportAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Creative Production Support Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;DynamicMarketingPromotionAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Dynamic Marketing &amp; Promotion Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GlobalDistributionSupplyChainAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Global Distribution &amp; Supply Chain Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RightsRoyaltiesAdministrationAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Rights &amp; Royalties Administration Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PublishingRightsCatalogManagementAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Publishing Rights &amp; Catalog Management Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SyncCreativeLicensingAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Sync &amp; Creative Licensing Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;FinancialPlanningAnalysisAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Financial Planning &amp; Analysis Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;LegalComplianceAssuranceAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Legal &amp; Compliance Assurance Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;AudienceIntelligenceAnalyticsAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Audience Intelligence &amp; Analytics Agent</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;StrategicPlanningSimulationAgent"><rdfs:subClassOf rdf:resource="&arl;AIAgent"/><rdfs:label xml:lang="en">Strategic Planning &amp; Simulation Agent</rdfs:label></owl:Class>
+    <owl:Class rdf:about="&arl;DistributionFeeProvision">
+        <rdfs:label xml:lang="en">Distribution Fee Provision</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/>
+        <rdfs:comment xml:lang="en">Details the distribution fee in a profit share agreement. Passman p.164.</rdfs:comment>
+    </owl:Class>
 
-    <!-- Subclasses of EPMO -->
-    <owl:Class rdf:about="&arl;Person"> <rdfs:subClassOf rdf:resource="&arl;EPMO"/> <rdfs:label xml:lang="en">Person</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Organization"> <rdfs:subClassOf rdf:resource="&arl;EPMO"/> <rdfs:label xml:lang="en">Organization</rdfs:label></owl:Class>
+    <!-- Performance Metrics Refined -->
+    <owl:Class rdf:about="&arl;TourProfitabilityMetric">
+        <rdfs:label xml:lang="en">Tour Profitability Metric</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&arl;FinancialReturnMetric"/>
+        <rdfs:comment xml:lang="en">Metrics related to the financial success of a tour. Passman Ch.23.</rdfs:comment>
+        <!-- e.g., netProfitPerShow, totalTourProfit, percentageOfSellOuts -->
+    </owl:Class>
+    <owl:Class rdf:about="&arl;SyncPlacementSuccessRateMetric">
+        <rdfs:label xml:lang="en">Sync Placement Success Rate Metric</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&arl;PerformanceMetric"/>
+        <rdfs:comment xml:lang="en">Measures the success rate of sync pitching efforts.</rdfs:comment>
+        <!-- e.g., pitchesMade, placementsSecured, averageFeePerPlacement -->
+    </owl:Class>
 
-    <!-- Subclasses of Person -->
-    <owl:Class rdf:about="&arl;Artist"> <rdfs:subClassOf rdf:resource="&arl;Person"/> <rdfs:label xml:lang="en">Artist (Performer)</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SoloArtist"> <rdfs:subClassOf rdf:resource="&arl;Artist"/> <rdfs:label xml:lang="en">Solo Artist</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MusicGroup"> <rdfs:subClassOf rdf:resource="&arl;Artist"/> <rdfs:label xml:lang="en">Music Group</rdfs:label></owl:Class> 
-    <owl:Class rdf:about="&arl;EmergingArtist"> <rdfs:subClassOf rdf:resource="&arl;Artist"/> <rdfs:label xml:lang="en">Emerging Artist</rdfs:label> <rdfs:comment xml:lang="en">An artist in early career stages, focusing on building a fanbase.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;EstablishedArtist"> <rdfs:subClassOf rdf:resource="&arl;Artist"/> <rdfs:label xml:lang="en">Established Artist</rdfs:label> <rdfs:comment xml:lang="en">An artist with a significant track record and fanbase.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;LegacyArtist"> <rdfs:subClassOf rdf:resource="&arl;Artist"/> <rdfs:label xml:lang="en">Legacy Artist</rdfs:label> <rdfs:comment xml:lang="en">An artist whose primary value is in their back catalog and established brand.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;Songwriter"> <rdfs:subClassOf rdf:resource="&arl;Person"/> <rdfs:label xml:lang="en">Songwriter</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Producer"> <rdfs:subClassOf rdf:resource="&arl;Person"/> <rdfs:label xml:lang="en">Producer</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TeamMember"> <rdfs:subClassOf rdf:resource="&arl;Person"/> <rdfs:label xml:lang="en">Team Member</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PersonalManager"> <rdfs:subClassOf rdf:resource="&arl;TeamMember"/> <rdfs:label xml:lang="en">Personal Manager</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MusicAttorney"> <rdfs:subClassOf rdf:resource="&arl;TeamMember"/> <rdfs:label xml:lang="en">Music Attorney</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;BusinessManager"> <rdfs:subClassOf rdf:resource="&arl;TeamMember"/> <rdfs:label xml:lang="en">Business Manager (Financial)</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;BookingAgent"> <rdfs:subClassOf rdf:resource="&arl;TeamMember"/> <rdfs:label xml:lang="en">Booking Agent (Talent Agent)</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;TourManager"> <rdfs:subClassOf rdf:resource="&arl;TeamMember"/> <rdfs:label xml:lang="en">Tour Manager</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;Publicist"> <rdfs:subClassOf rdf:resource="&arl;TeamMember"/> <rdfs:label xml:lang="en">Publicist</rdfs:label> </owl:Class>
-
-    <!-- Subclasses of Organization -->
-    <owl:Class rdf:about="&arl;RecordLabel"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Record Label</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MusicPublisher"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Music Publisher</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;DSP"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Digital Service Provider (DSP)</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PerformingRightsOrganization"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Performing Rights Organization (PRO)</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Promoter"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Promoter</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Venue"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Venue</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Merchandiser"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Merchandiser</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TicketingAgent"> <rdfs:subClassOf rdf:resource="&arl;Organization"/> <rdfs:label xml:lang="en">Ticketing Agent</rdfs:label> <rdfs:comment xml:lang="en">An organization that sells tickets for events.</rdfs:comment> </owl:Class>
-
-    <!-- Subclasses of CreativeWork -->
-    <owl:Class rdf:about="&arl;MusicWork"> <rdfs:subClassOf rdf:resource="&arl;CreativeWork"/> <rdfs:label xml:lang="en">Music Work (Song/Composition)</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Recording"> <rdfs:subClassOf rdf:resource="&arl;CreativeWork"/> <rdfs:label xml:lang="en">Recording (Master)</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MusicRelease"> <rdfs:subClassOf rdf:resource="&arl;CreativeWork"/> <rdfs:label xml:lang="en">Music Release (Album, Single, EP)</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;AlbumRelease"> <rdfs:subClassOf rdf:resource="&arl;MusicRelease"/> <rdfs:label xml:lang="en">Album Release</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SingleRelease"> <rdfs:subClassOf rdf:resource="&arl;MusicRelease"/> <rdfs:label xml:lang="en">Single Release</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;EPRelease"> <rdfs:subClassOf rdf:resource="&arl;MusicRelease"/> <rdfs:label xml:lang="en">EP Release</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MixtapeRelease"> <rdfs:subClassOf rdf:resource="&arl;MusicRelease"/> <rdfs:label xml:lang="en">Mixtape Release</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SoundtrackAlbum"> <rdfs:subClassOf rdf:resource="&arl;MusicRelease"/> <rdfs:label xml:lang="en">Soundtrack Album</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;CompilationAlbum"> <rdfs:subClassOf rdf:resource="&arl;MusicRelease"/> <rdfs:label xml:lang="en">Compilation Album</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;BoxSet"> <rdfs:subClassOf rdf:resource="&arl;MusicRelease"/> <rdfs:label xml:lang="en">Box Set</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MusicVideo"> <rdfs:subClassOf rdf:resource="&arl;CreativeWork"/> <rdfs:label xml:lang="en">Music Video</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MerchandiseItem"> <rdfs:subClassOf rdf:resource="&arl;CreativeWork"/> <rdfs:label xml:lang="en">Merchandise Item</rdfs:label></owl:Class> 
-
-    <!-- Subclasses of Agreement -->
-    <owl:Class rdf:about="&arl;Contract"> <rdfs:subClassOf rdf:resource="&arl;Agreement"/> <rdfs:label xml:lang="en">Contract</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PublishingContract"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Publishing Contract (Parent)</rdfs:label></owl:Class> 
-    <owl:Class rdf:about="&arl;PublishingAgreement"> <rdfs:subClassOf rdf:resource="&arl;PublishingContract"/> <rdfs:label xml:lang="en">Publishing Agreement</rdfs:label> </owl:Class> 
-    <owl:Class rdf:about="&arl;SongwriterAgreement"> <rdfs:subClassOf rdf:resource="&arl;PublishingAgreement"/> <rdfs:label xml:lang="en">Songwriter Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;CoPublishingAgreement"> <rdfs:subClassOf rdf:resource="&arl;PublishingAgreement"/> <rdfs:label xml:lang="en">Co-Publishing Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;AdministrationAgreement"> <rdfs:subClassOf rdf:resource="&arl;PublishingAgreement"/> <rdfs:label xml:lang="en">Administration Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;SubPublishingAgreement"> <rdfs:subClassOf rdf:resource="&arl;PublishingAgreement"/> <rdfs:label xml:lang="en">Sub-Publishing Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;LicenseAgreement"> <rdfs:subClassOf rdf:resource="&arl;Agreement"/> <rdfs:label xml:lang="en">License Agreement</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MechanicalLicense"> <rdfs:subClassOf rdf:resource="&arl;LicenseAgreement"/> <rdfs:label xml:lang="en">Mechanical License</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PerformanceLicense"> <rdfs:subClassOf rdf:resource="&arl;LicenseAgreement"/> <rdfs:label xml:lang="en">Performance License</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;SynchronizationLicense"> <rdfs:subClassOf rdf:resource="&arl;LicenseAgreement"/> <rdfs:label xml:lang="en">Synchronization License</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ProfessionalServiceAgreement"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Professional Service Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ProducerAgreement"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Producer Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MixerAgreement"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Mixer Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MerchandisingAgreement"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Merchandising Agreement</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TourMerchandisingAgreement"> <rdfs:subClassOf rdf:resource="&arl;MerchandisingAgreement"/> <rdfs:label xml:lang="en">Tour Merchandising Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;RetailMerchandisingAgreement"> <rdfs:subClassOf rdf:resource="&arl;MerchandisingAgreement"/> <rdfs:label xml:lang="en">Retail Merchandising Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;D2CMerchandisingAgreement"> <rdfs:subClassOf rdf:resource="&arl;MerchandisingAgreement"/> <rdfs:label xml:lang="en">D2C Merchandising Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;SponsorshipAgreement"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Sponsorship Agreement</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;DistributionDeal"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Distribution Deal</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;LabelServicesDeal"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Label Services Deal</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;UpstreamDeal"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Upstream Deal</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MusicGroupInternalAgreement"> <rdfs:subClassOf rdf:resource="&arl;Agreement"/> <rdfs:label xml:lang="en">Music Group Internal Agreement</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PerformanceAgreement"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Performance Agreement (Concert)</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ProfitShareAgreement"> <rdfs:subClassOf rdf:resource="&arl;Contract"/> <rdfs:label xml:lang="en">Profit Share Agreement</rdfs:label> </owl:Class>
-
-    <!-- Subclasses of FinancialConcept -->
-    <owl:Class rdf:about="&arl;RoyaltyStatement"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Royalty Statement</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Advance"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Advance</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SigningAdvance"> <rdfs:subClassOf rdf:resource="&arl;Advance"/> <rdfs:label xml:lang="en">Signing Advance</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;AlbumFundAdvance"> <rdfs:subClassOf rdf:resource="&arl;Advance"/> <rdfs:label xml:lang="en">Album Fund Advance</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TourSupportAdvance"> <rdfs:subClassOf rdf:resource="&arl;Advance"/> <rdfs:label xml:lang="en">Tour Support Advance</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MerchAdvance"> <rdfs:subClassOf rdf:resource="&arl;Advance"/> <rdfs:label xml:lang="en">Merchandise Advance</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;RecoupableCost"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Recoupable Cost</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RecordingCost"> <rdfs:subClassOf rdf:resource="&arl;RecoupableCost"/> <rdfs:label xml:lang="en">Recording Cost (Recoupable)</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;VideoProductionCost"> <rdfs:subClassOf rdf:resource="&arl;RecoupableCost"/> <rdfs:label xml:lang="en">Video Production Cost (Recoupable)</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MarketingCostRecoupable"> <rdfs:subClassOf rdf:resource="&arl;RecoupableCost"/> <rdfs:label xml:lang="en">Marketing Cost (Recoupable)</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;Royalty"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Royalty</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RecordRoyalty"> <rdfs:subClassOf rdf:resource="&arl;Royalty"/> <rdfs:label xml:lang="en">Record Royalty</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PublishingRoyalty"> <rdfs:subClassOf rdf:resource="&arl;Royalty"/> <rdfs:label xml:lang="en">Publishing Royalty</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MechanicalRoyalty"> <rdfs:subClassOf rdf:resource="&arl;PublishingRoyalty"/> <rdfs:label xml:lang="en">Mechanical Royalty</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PerformanceRoyalty"> <rdfs:subClassOf rdf:resource="&arl;PublishingRoyalty"/> <rdfs:label xml:lang="en">Performance Royalty</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;SyncRoyalty"> <rdfs:subClassOf rdf:resource="&arl;PublishingRoyalty"/> <rdfs:label xml:lang="en">Sync Royalty</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PrintRoyalty"> <rdfs:subClassOf rdf:resource="&arl;PublishingRoyalty"/> <rdfs:label xml:lang="en">Print Royalty</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MerchRoyalty"> <rdfs:subClassOf rdf:resource="&arl;Royalty"/> <rdfs:label xml:lang="en">Merchandise Royalty</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;Fund"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Fund (Recording)</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RevenueSource"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Revenue Source</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;StreamingRevenue"> <rdfs:subClassOf rdf:resource="&arl;RevenueSource"/> <rdfs:label xml:lang="en">Streaming Revenue</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PhysicalSalesRevenue"> <rdfs:subClassOf rdf:resource="&arl;RevenueSource"/> <rdfs:label xml:lang="en">Physical Sales Revenue</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;SyncFeeRevenue"> <rdfs:subClassOf rdf:resource="&arl;RevenueSource"/> <rdfs:label xml:lang="en">Sync Fee Revenue</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;TourRevenue"> <rdfs:subClassOf rdf:resource="&arl;RevenueSource"/> <rdfs:label xml:lang="en">Tour Revenue</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ExpenseCategory"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Expense Category</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ManufacturingExpense"> <rdfs:subClassOf rdf:resource="&arl;ExpenseCategory"/> <rdfs:label xml:lang="en">Manufacturing Expense</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;TouringExpense"> <rdfs:subClassOf rdf:resource="&arl;ExpenseCategory"/> <rdfs:label xml:lang="en">Touring Expense</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;LegalExpense"> <rdfs:subClassOf rdf:resource="&arl;ExpenseCategory"/> <rdfs:label xml:lang="en">Legal Expense</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;Investment"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Investment</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;RoyaltyTier"> <rdfs:subClassOf rdf:resource="&arl;FinancialConcept"/> <rdfs:label xml:lang="en">Royalty Tier</rdfs:label> </owl:Class>
-    <!-- KPI is already defined as subclass of FinancialConcept, removed redundant definition -->
-
-    <!-- Subclasses of MarketingConcept -->
-    <owl:Class rdf:about="&arl;MarketingCampaign"> <rdfs:subClassOf rdf:resource="&arl;MarketingConcept"/> <rdfs:label xml:lang="en">Marketing Campaign</rdfs:label> <rdfs:comment xml:lang="en">Represents a planned set of marketing activities for a specific purpose, often a MusicRelease or Artist promotion.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;AudienceSegment"> <rdfs:subClassOf rdf:resource="&arl;MarketingConcept"/> <rdfs:label xml:lang="en">Audience Segment</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PromotionalActivity"> <rdfs:subClassOf rdf:resource="&arl;MarketingConcept"/> <rdfs:label xml:lang="en">Promotional Activity</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;RadioCampaign"> <rdfs:subClassOf rdf:resource="&arl;PromotionalActivity"/> <rdfs:label xml:lang="en">Radio Campaign</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PlaylistPitching"> <rdfs:subClassOf rdf:resource="&arl;PromotionalActivity"/> <rdfs:label xml:lang="en">Playlist Pitching</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;SocialMediaPush"> <rdfs:subClassOf rdf:resource="&arl;PromotionalActivity"/> <rdfs:label xml:lang="en">Social Media Push</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;FanEngagementMetric"> <rdfs:subClassOf rdf:resource="&arl;MarketingConcept"/> <rdfs:label xml:lang="en">Fan Engagement Metric</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;FanDatabaseRecord"> <rdfs:subClassOf rdf:resource="&arl;MarketingConcept"/> <rdfs:label xml:lang="en">Fan Database Record</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;MarketTrend"> <rdfs:subClassOf rdf:resource="&arl;MarketingConcept"/> <rdfs:label xml:lang="en">Market Trend</rdfs:label> </owl:Class>
-    <!-- PerformanceMetric is already defined as subclass of MarketingConcept, removed redundant definition -->
+    <!-- Support for Soundtrack Album Deals -->
+    <owl:Class rdf:about="&arl;SoundtrackAlbumParticipation">
+        <rdfs:label xml:lang="en">Soundtrack Album Participation</rdfs:label>
+        <rdfs:comment xml:lang="en">Represents an artist's participation in a soundtrack album. Passman Ch.28, 31.</rdfs:comment>
+        <rdfs:subClassOf>
+            <owl:Restriction><owl:onProperty rdf:resource="&arl;participantArtist"/><owl:someValuesFrom rdf:resource="&arl;Artist"/></owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction><owl:onProperty rdf:resource="&arl;onSoundtrackAlbum"/><owl:someValuesFrom rdf:resource="&arl;SoundtrackAlbum"/></owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction><owl:onProperty rdf:resource="&arl;soundtrackArtistRoyalty"/><owl:someValuesFrom rdf:resource="&arl;Royalty"/></owl:Restriction>
+        </rdfs:subClassOf>
+        <!-- Properties: isTieInTrack (boolean), numberOfTracksContributed (integer) -->
+    </owl:Class>
+    <owl:ObjectProperty rdf:about="&arl;participantArtist"><rdfs:domain rdf:resource="&arl;SoundtrackAlbumParticipation"/><rdfs:range rdf:resource="&arl;Artist"/></owl:ObjectProperty>
+    <owl:ObjectProperty rdf:about="&arl;onSoundtrackAlbum"><rdfs:domain rdf:resource="&arl;SoundtrackAlbumParticipation"/><rdfs:range rdf:resource="&arl;SoundtrackAlbum"/></owl:ObjectProperty>
     
-    <!-- Subclasses of RightsConcept -->
-    <owl:Class rdf:about="&arl;Copyright"> <rdfs:subClassOf rdf:resource="&arl;RightsConcept"/> <rdfs:label xml:lang="en">Copyright</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MusicalWorkCopyright"> <rdfs:subClassOf rdf:resource="&arl;Copyright"/> <rdfs:label xml:lang="en">Musical Work Copyright</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SoundRecordingCopyright"> <rdfs:subClassOf rdf:resource="&arl;Copyright"/> <rdfs:label xml:lang="en">Sound Recording Copyright</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ExclusiveRight"> <rdfs:subClassOf rdf:resource="&arl;RightsConcept"/> <rdfs:label xml:lang="en">Exclusive Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ExclusiveRecordingRight"> <rdfs:subClassOf rdf:resource="&arl;ExclusiveRight"/> <rdfs:label xml:lang="en">Exclusive Recording Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ExclusivePublishingRight"> <rdfs:subClassOf rdf:resource="&arl;ExclusiveRight"/> <rdfs:label xml:lang="en">Exclusive Publishing Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;UsageRight"> <rdfs:subClassOf rdf:resource="&arl;RightsConcept"/> <rdfs:label xml:lang="en">Usage Right</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ReproductionRight"> <rdfs:subClassOf rdf:resource="&arl;UsageRight"/> <rdfs:label xml:lang="en">Reproduction Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;DistributionRight"> <rdfs:subClassOf rdf:resource="&arl;UsageRight"/> <rdfs:label xml:lang="en">Distribution Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;PublicPerformanceRight"> <rdfs:subClassOf rdf:resource="&arl;UsageRight"/> <rdfs:label xml:lang="en">Public Performance Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;SynchronizationRight"> <rdfs:subClassOf rdf:resource="&arl;UsageRight"/> <rdfs:label xml:lang="en">Synchronization Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ReversionRight"> <rdfs:subClassOf rdf:resource="&arl;RightsConcept"/> <rdfs:label xml:lang="en">Reversion Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;TerminationRight"> <rdfs:subClassOf rdf:resource="&arl;RightsConcept"/> <rdfs:label xml:lang="en">Termination Right</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;ThreeSixtyRightComponent"> <rdfs:subClassOf rdf:resource="&arl;RightsConcept"/> <rdfs:label xml:lang="en">360 Right Component</rdfs:label></owl:Class>
+    <!-- Producer/Mixer Agreement Refinements -->
+    <owl:Class rdf:about="&arl;ProducerAgreement">
+        <!-- Already a subclass of Contract -->
+        <rdfs:subClassOf>
+            <owl:Restriction><owl:onProperty rdf:resource="&arl;producerReceivesRecordOneRoyalty"/><owl:allValuesFrom rdf:resource="&arl;Royalty"/></owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
 
-    <!-- Subclasses of Event -->
-    <owl:Class rdf:about="&arl;Tour"> <rdfs:subClassOf rdf:resource="&arl;Event"/> <rdfs:label xml:lang="en">Tour</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;Concert"> <rdfs:subClassOf rdf:resource="&arl;Event"/> <rdfs:label xml:lang="en">Concert</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;FestivalAppearance"> <rdfs:subClassOf rdf:resource="&arl;Event"/> <rdfs:label xml:lang="en">Festival Appearance</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ReleaseEvent"> <rdfs:subClassOf rdf:resource="&arl;Event"/> <rdfs:label xml:lang="en">Release Event</rdfs:label></owl:Class>
-
-    <!-- Subclasses of ContractualProvision -->
-    <owl:Class rdf:about="&arl;ControlledCompositionClause"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Controlled Composition Clause</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PayOrPlayProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Pay Or Play Provision</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ThreeSixtyRightProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">360 Right Provision</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ReversionClause"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Reversion Clause</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;KeyMemberProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Key Member Provision</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;LeavingMemberProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Leaving Member Provision</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ExclusivityProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Exclusivity Provision</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ReRecordingRestrictionClause"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Re-Recording Restriction Clause</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TerminationRightProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Termination Right Provision</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;OptionProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Option Provision</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;DeliveryStandardProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Delivery Standard Provision</rdfs:label> </owl:Class>
-    <owl:Class rdf:about="&arl;AuditRightProvision"> <rdfs:subClassOf rdf:resource="&arl;ContractualProvision"/> <rdfs:label xml:lang="en">Audit Right Provision</rdfs:label> </owl:Class>
-
-    <!-- Subclasses of AgentAction -->
-    <owl:Class rdf:about="&arl;ScoutArtistAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Scout Artist Action</rdfs:label> <rdfs:comment xml:lang="en">Action by A&amp;R-ISA to identify and analyze potential new artists. Revenue impact: finding commercially viable artists. Passman p.24, 82-83.</rdfs:comment> </owl:Class>
-    <owl:Class rdf:about="&arl;AnalyzeArtistPotentialAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Analyze Artist Potential Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MonitorExistingRosterPerformanceAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Monitor Existing Roster Performance Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IdentifyMicroGenreTrendAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Identify Micro-Genre Trend Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateComparableArtistReportAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Comparable Artist Report Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;FlagArtistForReviewAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Flag Artist For Review Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PredictArtistTrajectoryAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Predict Artist Trajectory Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SuggestCreativeElementsAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Suggest Creative Elements Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ProcessAudioForMasteringAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Process Audio For Mastering Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PerformQualityControlCheckAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Perform Quality Control Check Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ManageStudioLogisticsAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Manage Studio Logistics Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IdentifyPotentialCollaboratorsAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Identify Potential Collaborators Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateDemoFeedbackReportAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Demo Feedback Report Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TrackProductionMilestonesAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Track Production Milestones Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateMarketingCampaignPlanAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Marketing Campaign Plan Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ExecuteDigitalAdCampaignAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Execute Digital Ad Campaign Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;OptimizeAdCampaignAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Optimize Ad Campaign Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IdentifyPlaylistOpportunityAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Identify Playlist Opportunity Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ManageFanDatabaseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Manage Fan Database Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateSocialMediaContentDraftAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Social Media Content Draft Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ExecutePlaylistPitchingAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Execute Playlist Pitching Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RunContestOrGiveawayAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Run Contest Or Giveaway Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SegmentAudienceForTargetingAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Segment Audience For Targeting Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;DeliverReleaseToDSPAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Deliver Release To DSP Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;OptimizeReleaseScheduleAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Optimize Release Schedule Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MonitorChannelPerformanceAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Monitor Channel Performance Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ValidateReleaseMetadataAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Validate Release Metadata Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ManagePhysicalInventoryAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Manage Physical Inventory Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TrackGlobalReleaseStatusAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Track Global Release Status Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IngestContractAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Ingest Contract Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;CalculateRoyaltiesAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Calculate Royalties Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ProcessLicensingRequestAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Process Licensing Request Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PublishKnowledgeAssetAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Publish Knowledge Asset Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;AuditRoyaltyStatementAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Audit Royalty Statement Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;FlagExpiringLicenseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Flag Expiring License Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;VerifyRightsOwnershipChainAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Verify Rights Ownership Chain Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RegisterMusicWorkAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Register Music Work Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;VerifyMetadataAccuracyAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Verify Metadata Accuracy Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TrackPublishingRoyaltiesAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Track Publishing Royalties Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IdentifyUnregisteredWorksAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Identify Unregistered Works Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ProcessCopyrightSplitAgreementAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Process Copyright Split Agreement Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MonitorSubPublisherPerformanceAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Monitor Sub-Publisher Performance Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MineSyncOpportunitiesAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Mine Sync Opportunities Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateSyncPitchAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Sync Pitch Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;TrackSyncLicenseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Track Sync License Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;NegotiateStandardSyncLicenseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Negotiate Standard Sync License Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RecommendSyncFeeAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Recommend Sync Fee Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;FollowUpOnPitchAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Follow Up On Pitch Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateFinancialReportAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Financial Report Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ForecastRevenueAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Forecast Revenue Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RecommendBudgetAllocationAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Recommend Budget Allocation Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;AnalyzeArtistRecoupmentStatusAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Analyze Artist Recoupment Status Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ModelPricingStrategyImpactAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Model Pricing Strategy Impact Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IdentifyCostSavingOpportunityAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Identify Cost Saving Opportunity Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MonitorContractualComplianceAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Monitor Contractual Compliance Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ScanRegulatoryUpdatesAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Scan Regulatory Updates Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;DraftStandardAgreementAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Draft Standard Agreement Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;VerifySampleClearanceStatusAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Verify Sample Clearance Status Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ManageRightsExpiryAlertsAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Manage Rights Expiry Alerts Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IntegrateCrossPlatformDataAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Integrate Cross-Platform Data Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateAudienceSegmentProfileAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Audience Segment Profile Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;AttributePerformanceDriverAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Attribute Performance Driver Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PredictChurnRiskAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Predict Churn Risk Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;IdentifyCrossPromotionOpportunityAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Identify Cross-Promotion Opportunity Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateMarketPenetrationReportAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Market Penetration Report Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ManageDigitalTwinDataFlowAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Manage Digital Twin DataFlow Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;ExecuteSimulationScenarioAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Execute Simulation Scenario Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;AnalyzeMA_TargetAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Analyze M&amp;A Target Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SimulateCompetitiveResponseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Simulate Competitive Response Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;EvaluateLongTermArtistValueAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Evaluate Long-Term Artist Value Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RecommendStrategicPartnershipAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Recommend Strategic Partnership Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SignArtistAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Sign Artist Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;LaunchMarketingCampaignAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Launch Marketing Campaign Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;DistributeMusicReleaseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Distribute Music Release Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;UpdateDatabaseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Update Database Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;PostToSocialMediaAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Post to Social Media Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;InitiateRoyaltyPaymentAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Initiate Royalty Payment Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;GenerateReportAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Generate Report Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;NegotiateLicenseAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Negotiate License Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;RunSimulationScenarioAction"><rdfs:subClassOf rdf:resource="&arl;AgentAction"/><rdfs:label xml:lang="en">Run Simulation Scenario Action</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;SignArtistDecisionAction"> <rdfs:subClassOf rdf:resource="&arl;AgentAction"/> <rdfs:label xml:lang="en">Sign Artist Decision Action</rdfs:label></owl:Class>
-
-
-    <!-- Subclasses of ContextualDataFeed -->
-    <owl:Class rdf:about="&arl;SocialMediaFeed"><rdfs:subClassOf rdf:resource="&arl;ContextualDataFeed"/><rdfs:label xml:lang="en">Social Media Feed</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;StreamingPlatformDataFeed"><rdfs:subClassOf rdf:resource="&arl;ContextualDataFeed"/><rdfs:label xml:lang="en">Streaming Platform Data Feed</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MusicNewsFeed"><rdfs:subClassOf rdf:resource="&arl;ContextualDataFeed"/><rdfs:label xml:lang="en">Music News Feed</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;InternalFinancialDataFeed"><rdfs:subClassOf rdf:resource="&arl;ContextualDataFeed"/><rdfs:label xml:lang="en">Internal Financial Data Feed</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;InternalLegalDataFeed"><rdfs:subClassOf rdf:resource="&arl;ContextualDataFeed"/><rdfs:label xml:lang="en">Internal Legal Data Feed</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;MarketResearchDataFeed"><rdfs:subClassOf rdf:resource="&arl;ContextualDataFeed"/><rdfs:label xml:lang="en">Market Research Data Feed</rdfs:label></owl:Class>
-    <owl:Class rdf:about="&arl;CompetitorActivityFeed"><rdfs:subClassOf rdf:resource="&arl;ContextualDataFeed"/><rdfs:label xml:lang="en">Competitor Activity Feed</rdfs:label></owl:Class>
+    <!-- == More Stubbed LogicalRule Individuals (Passman Logic Examples) == -->
+    <arl:LogicalRule rdf:about="&arl;Rule_ProducerRecordOnePaymentTrigger">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="en">Rule: Producer Record One Payment Trigger</rdfs:label>
+        <arl:ruleType xml:lang="en">FinancialCalculation_Passman</arl:ruleType>
+        <arl:ruleDefinition xml:lang="en">SWRL Placeholder: IF ProducerAgreement(?pa) AND isRetroactiveToRecordOne(?pa, true) AND RecordingContract(?rc) isRecoupedAtNetArtistRateForProducer(?rc, ?pa) THEN ProducerRoyaltyPayment is calculated on all units sold/streamed from record one. (Passman p.108-109)</arl:ruleDefinition>
+        <rdfs:comment xml:lang="en">Defines when and how a producer becomes eligible for retroactive 'record one' royalty payments.</rdfs:comment>
+    </arl:LogicalRule>
     
-    <!-- 
-    ====================================================================================
-    Complex Class Axioms (Restrictions)
-    ====================================================================================
-    -->
-
-    <owl:Class rdf:about="&arl;RecordingContract"> 
-        <rdfs:subClassOf rdf:resource="&arl;Contract"/> <!-- Added superclass explicitly for clarity, though implied by hierarchy -->
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;partiesInvolved"/> <owl:someValuesFrom rdf:resource="&arl;RecordLabel"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;partiesInvolved"/> <owl:onClass rdf:resource="&arl;RecordLabel"/> <owl:maxQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxQualifiedCardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;partiesInvolved"/> <owl:someValuesFrom> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;Artist"/> <rdf:Description rdf:about="&arl;MusicGroup"/> </owl:unionOf> </owl:Class> </owl:someValuesFrom> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasDealTerm"/> <owl:someValuesFrom rdf:resource="&arl;DealTerm"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasDealTerm"/> <owl:allValuesFrom rdf:resource="&arl;DealTerm"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;specifiesRoyalty"/> <owl:someValuesFrom rdf:resource="&arl;RecordRoyalty"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;specifiesRoyalty"/> <owl:allValuesFrom rdf:resource="&arl;Royalty"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;specifiesAdvance"/> <owl:allValuesFrom rdf:resource="&arl;Advance"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;specifiesFund"/> <owl:allValuesFrom rdf:resource="&arl;Fund"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;contractSpecifiesDeliveryRequirement"/> <owl:allValuesFrom rdf:resource="&arl;DeliveryRequirement"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;coversTerritory"/> <owl:someValuesFrom rdf:resource="&arl;Territory"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasControlledCompositionClause"/> <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasPayOrPlayClause"/> <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasThreeSixtyProvision"/> <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;contractIncludesExclusivity"/> <owl:allValuesFrom rdf:resource="&arl;ExclusivityProvision"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;contractIncludesReRecordingRestriction"/> <owl:allValuesFrom rdf:resource="&arl;ReRecordingRestrictionClause"/> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;DealTerm"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;dealTermStartDate"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;isFirmTerm"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;contractSpecifiesDeliveryRequirement"/> <owl:someValuesFrom rdf:resource="&arl;DeliveryRequirement"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;optionExercisableBy"/> <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;Royalty"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;royaltyRateValue"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;royaltyCalculationBasis"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;royaltyAppliesTo"/> <owl:someValuesFrom> <owl:Class><owl:unionOf rdf:parseType="Collection"><rdf:Description rdf:about="&arl;MusicRelease"/><rdf:Description rdf:about="&arl;MusicWork"/><rdf:Description rdf:about="&arl;MerchandiseItem"/></owl:unionOf></owl:Class> </owl:someValuesFrom> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;royaltyHasTier"/> <owl:allValuesFrom rdf:resource="&arl;RoyaltyTier"/> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;MarketingCampaign"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;campaignTargetsGenericAsset"/> <owl:someValuesFrom> <owl:Class> <owl:unionOf rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;MusicRelease"/> <rdf:Description rdf:about="&arl;Artist"/> </owl:unionOf> </owl:Class> </owl:someValuesFrom> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasBudgetAmountObject"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;comprisesActivity"/> <owl:someValuesFrom rdf:resource="&arl;PromotionalActivity"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;targetsAudienceSegment"/> <owl:someValuesFrom rdf:resource="&arl;AudienceSegment"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasPerformanceMetric"/> <owl:allValuesFrom rdf:resource="&arl;FanEngagementMetric"/> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;AgentAction"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionPerformedBy"/> <owl:someValuesFrom rdf:resource="&arl;AIAgent"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionTimestamp"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasActionStatusValue"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;ScoutArtistAction"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionTargetsEntity"/> <owl:allValuesFrom rdf:resource="&arl;Artist"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionPerformedBy"/> <owl:hasValue rdf:resource="&arl;AandRInsightScoutingAgent"/> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasInputParameters"/> <owl:allValuesFrom rdf:resource="&arl;ScoutArtistParameters"/> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasActionOutput"/> <owl:allValuesFrom rdf:resource="&arl;ScoutArtistOutcome"/> </owl:Restriction> </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;LaunchMarketingCampaignAction"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionTargetsEntity"/> <owl:someValuesFrom rdf:resource="&arl;MarketingCampaign"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionPerformedBy"/> <owl:hasValue rdf:resource="&arl;DynamicMarketingPromotionAgent"/> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasInputParameters"/> <owl:someValuesFrom rdf:resource="&arl;LaunchMarketingCampaignParameters"/> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasActionOutput"/> <owl:allValuesFrom rdf:resource="&arl;LaunchMarketingCampaignOutcome"/> </owl:Restriction> </rdfs:subClassOf>
-    </owl:Class>
-    
-    <owl:Class rdf:about="&arl;InitiateRoyaltyPaymentAction"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionTargetsEntity"/> <owl:someValuesFrom rdf:resource="&arl;RoyaltyStatement"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionPerformedBy"/> <owl:hasValue rdf:resource="&arl;RightsRoyaltiesAdministrationAgent"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasInputParameters"/> <owl:allValuesFrom rdf:resource="&arl;InitiateRoyaltyPaymentParameters"/> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasActionOutput"/> <owl:allValuesFrom rdf:resource="&arl;InitiateRoyaltyPaymentOutcome"/> </owl:Restriction> </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;SignArtistDecisionAction"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasDecisionParameters"/> <owl:allValuesFrom rdf:resource="&arl;AandRDecisionParameters"/> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionPerformedBy"/> <owl:hasValue rdf:resource="&arl;AandRInsightScoutingAgent"/> </owl:Restriction> </rdfs:subClassOf>
-    </owl:Class>
-    
-    <owl:Class rdf:about="&arl;ExecuteSimulationScenarioAction">
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;actionPerformedBy"/> <owl:hasValue rdf:resource="&arl;StrategicPlanningSimulationAgent"/> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasInputParameters"/> <owl:allValuesFrom rdf:resource="&arl;ExecuteSimulationScenarioParameters"/> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasActionOutput"/> <owl:allValuesFrom rdf:resource="&arl;ExecuteSimulationScenarioOutcome"/> </owl:Restriction> </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;MonetaryAmount">
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasCurrencyValue"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf>
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasCurrency"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;Artist">
-         <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasHeatLevelValue"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf>
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;MusicRelease"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;containsRecording"/> <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;DeliveryRequirement"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;numberOfUnitsRequired"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;hasDeliveryStandardValue"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;productTypeRequired"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;RoyaltyTier"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;escalationTriggeredBy"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;escalatedRoyaltyRate"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;PerformanceMetricThreshold"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;thresholdMetric"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;thresholdValue"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;ControlledCompositionClause"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;controlledCompositionRateDetails"/> <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality> </owl:Restriction> </rdfs:subClassOf> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;rateLockDateType"/> <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-
-    <owl:Class rdf:about="&arl;Copyright"> 
-        <rdfs:subClassOf> <owl:Restriction> <owl:onProperty rdf:resource="&arl;copyrightOwner"/> <owl:someValuesFrom rdf:resource="&arl;EPMO"/> </owl:Restriction> </rdfs:subClassOf> 
-    </owl:Class>
-    
-
-    <!-- Disjoint Classes -->
-    <owl:AllDisjointClasses> <owl:members rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;TouringIncome"/> <rdf:Description rdf:about="&arl;MerchandiseIncome"/> <rdf:Description rdf:about="&arl;SponsorshipIncome"/> <rdf:Description rdf:about="&arl;IncomeSource_Mechanical"/> <rdf:Description rdf:about="&arl;IncomeSource_Performance"/> <rdf:Description rdf:about="&arl;IncomeSource_Sync"/> <rdf:Description rdf:about="&arl;IncomeSource_Print"/> </owl:members> </owl:AllDisjointClasses>
-    <owl:AllDisjointClasses> <owl:members rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;SigningAdvance"/> <rdf:Description rdf:about="&arl;AlbumFundAdvance"/> <rdf:Description rdf:about="&arl;TourSupportAdvance"/> </owl:members> </owl:AllDisjointClasses>
-    <owl:AllDisjointClasses> <owl:members rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;RecordingCost"/> <rdf:Description rdf:about="&arl;VideoProductionCost"/> <rdf:Description rdf:about="&arl;MarketingCostRecoupable"/> </owl:members> </owl:AllDisjointClasses>
-    <owl:AllDisjointClasses> <owl:members rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;SoloArtist"/> <rdf:Description rdf:about="&arl;MusicGroup"/> </owl:members> </owl:AllDisjointClasses>
-    <owl:AllDisjointClasses> <owl:members rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;AlbumRelease"/> <rdf:Description rdf:about="&arl;SingleRelease"/> <rdf:Description rdf:about="&arl;EPRelease"/> </owl:members> </owl:AllDisjointClasses>
-    <owl:AllDisjointClasses> <owl:members rdf:parseType="Collection"> <rdf:Description rdf:about="&arl;RecordingContract"/> <rdf:Description rdf:about="&arl;PublishingContract"/> <rdf:Description rdf:about="&arl;LicenseAgreement"/> <rdf:Description rdf:about="&arl;MerchandisingAgreement"/> </owl:members> </owl:AllDisjointClasses>
-
-
-   <!-- Named Individuals -->
-    <owl:NamedIndividual rdf:about="&arl;USD"><rdf:type rdf:resource="&arl;CurrencyCode"/><rdfs:label>USD</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;EUR"><rdf:type rdf:resource="&arl;CurrencyCode"/><rdfs:label>EUR</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;GBP"><rdf:type rdf:resource="&arl;CurrencyCode"/><rdfs:label>GBP</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;ActionStatus_Proposed"><rdf:type rdf:resource="&arl;ActionStatusCode"/><rdfs:label>Proposed</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;ActionStatus_Approved"><rdf:type rdf:resource="&arl;ActionStatusCode"/><rdfs:label>Approved</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;ActionStatus_Executed"><rdf:type rdf:resource="&arl;ActionStatusCode"/><rdfs:label>Executed</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;ActionStatus_Failed"><rdf:type rdf:resource="&arl;ActionStatusCode"/><rdfs:label>Failed</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;ActionStatus_PendingHumanReview"><rdf:type rdf:resource="&arl;ActionStatusCode"/><rdfs:label>Pending Human Review</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;HeatLevel_Minor"><rdf:type rdf:resource="&arl;HeatLevelValue"/><rdfs:label>Minor Heat</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;HeatLevel_Moderate"><rdf:type rdf:resource="&arl;HeatLevelValue"/><rdfs:label>Moderate Heat</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;HeatLevel_Heavy"><rdf:type rdf:resource="&arl;HeatLevelValue"/><rdfs:label>Heavy Heat</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;HeatLevel_Superstar"><rdf:type rdf:resource="&arl;HeatLevelValue"/><rdfs:label>Superstar Heat</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;DeliveryStandard_CommerciallySatisfactory"><rdf:type rdf:resource="&arl;DeliveryStandardValue"/><rdfs:label>Commercially Satisfactory</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;DeliveryStandard_TechnicallySatisfactory"><rdf:type rdf:resource="&arl;DeliveryStandardValue"/><rdfs:label>Technically Satisfactory</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Genre_Rock"><rdf:type rdf:resource="&arl;Genre"/><genreName>Rock</genreName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Genre_Pop"><rdf:type rdf:resource="&arl;Genre"/><genreName>Pop</genreName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Genre_Funk"><rdf:type rdf:resource="&arl;Genre"/><genreName>Funk</genreName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Genre_Soul"><rdf:type rdf:resource="&arl;Genre"/><genreName>Soul</genreName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Genre_Electronic"><rdf:type rdf:resource="&arl;Genre"/><genreName>Electronic</genreName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Genre_Downtempo"><rdf:type rdf:resource="&arl;Genre"/><genreName>Downtempo</genreName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Genre_Reggae"><rdf:type rdf:resource="&arl;Genre"/><genreName>Reggae</genreName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;DavidBowie"><rdf:type rdf:resource="&arl;SoloArtist"/><artistName>David Bowie</artistName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Prince"><rdf:type rdf:resource="&arl;SoloArtist"/><artistName>Prince</artistName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;KruderAndDorfmeister"><rdf:type rdf:resource="&arl;MusicGroup"/><artistName>Kruder and Dorfmeister</artistName></owl:NamedIndividual>  <!-- THIS LINE IS FIXED -->
-    <owl:NamedIndividual rdf:about="&arl;BobMarley"><rdf:type rdf:resource="&arl;SoloArtist"/><artistName>Bob Marley</artistName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;DamianMarley"><rdf:type rdf:resource="&arl;SoloArtist"/><artistName>Damian Marley</artistName></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;TouringIncome"><rdf:type rdf:resource="&arl;AncillaryIncomeStream"/><rdfs:label>Touring Income</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;MerchandiseIncome"><rdf:type rdf:resource="&arl;AncillaryIncomeStream"/><rdfs:label>Merchandise Income</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;SponsorshipIncome"><rdf:type rdf:resource="&arl;AncillaryIncomeStream"/><rdfs:label>Sponsorship Income</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;MediaType_Film"><rdf:type rdf:resource="&arl;MediaType"/><rdfs:label>Film</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;MediaType_Television"><rdf:type rdf:resource="&arl;MediaType"/><rdfs:label>Television</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;MediaType_Commercial"><rdf:type rdf:resource="&arl;MediaType"/><rdfs:label>Commercial</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;MediaType_Game"><rdf:type rdf:resource="&arl;MediaType"/><rdfs:label>Game</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Format_DigitalStream"><rdf:type rdf:resource="&arl;MusicReleaseFormat"/><rdfs:label>Digital Stream</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Format_DigitalDownload"><rdf:type rdf:resource="&arl;MusicReleaseFormat"/><rdfs:label>Digital Download</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Format_VinylLP"><rdf:type rdf:resource="&arl;MusicReleaseFormat"/><rdfs:label>Vinyl LP</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;Format_CD"><rdf:type rdf:resource="&arl;MusicReleaseFormat"/><rdfs:label>CD</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;IncomeSource_Mechanical"><rdf:type rdf:resource="&arl;IncomeSourceType"/><rdfs:label>Mechanical Income</rdfs:label><incomeSourceDescription>Income from mechanical reproduction of songs.</incomeSourceDescription></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;IncomeSource_Performance"><rdf:type rdf:resource="&arl;IncomeSourceType"/><rdfs:label>Performance Income</rdfs:label><incomeSourceDescription>Income from public performance of songs.</incomeSourceDescription></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;IncomeSource_Sync"><rdf:type rdf:resource="&arl;IncomeSourceType"/><rdfs:label>Sync Income</rdfs:label><incomeSourceDescription>Income from synchronization of music with visual media.</incomeSourceDescription></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;IncomeSource_Print"><rdf:type rdf:resource="&arl;IncomeSourceType"/><rdfs:label>Print Income</rdfs:label><incomeSourceDescription>Income from printed sheet music.</incomeSourceDescription></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;RightToReproduce"><rdf:type rdf:resource="&arl;UsageRight"/><rdfs:label>Right to Reproduce</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;RightToDistribute"><rdf:type rdf:resource="&arl;UsageRight"/><rdfs:label>Right to Distribute</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;RightToPubliclyPerform"><rdf:type rdf:resource="&arl;UsageRight"/><rdfs:label>Right to Publicly Perform</rdfs:label></owl:NamedIndividual>
-    <owl:NamedIndividual rdf:about="&arl;RightToSynchronize"><rdf:type rdf:resource="&arl;UsageRight"/><rdfs:label>Right to Synchronize</rdfs:label></owl:NamedIndividual>
+    <arl:LogicalRule rdf:about="&arl;Rule_SoundtrackProRataRoyaltyFloor">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label xml:lang="en">Rule: Soundtrack Pro-Rata Royalty Floor</rdfs:label>
+        <arl:ruleType xml:lang="en">ContractTermGuideline_Passman</arl:ruleType>
+        <arl:ruleDefinition xml:lang="en">Heuristic Placeholder: WHEN negotiating SoundtrackAlbumParticipation for major artist, Royalty.proRataShare SHOULD NOT BE LESS THAN 1/12th of full album rate. (Passman p.460-461)</arl:ruleDefinition>
+        <rdfs:comment xml:lang="en">Guideline for ensuring a minimum pro-rata royalty share for an artist on a soundtrack album, as per Passman.</rdfs:comment>
+    </arl:LogicalRule>
 
 </rdf:RDF>
